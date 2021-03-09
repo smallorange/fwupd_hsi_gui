@@ -901,6 +901,9 @@ use_dark_theme (CcInfoOverviewPanel *panel)
 static void
 setup_os_logo (CcInfoOverviewPanel *panel)
 {
+#ifdef DISTRIBUTOR_LOGO
+  gtk_image_set_from_file (panel->os_logo, DISTRIBUTOR_LOGO);
+#else
   g_autofree char *logo_name = g_get_os_info ("LOGO");
   g_autoptr(GPtrArray) array = NULL;
   g_autoptr(GIcon) icon = NULL;
@@ -920,6 +923,7 @@ setup_os_logo (CcInfoOverviewPanel *panel)
 
   icon = g_themed_icon_new_from_names ((char **) array->pdata, array->len);
   gtk_image_set_from_gicon (panel->os_logo, icon, GTK_ICON_SIZE_INVALID);
+#endif
 }
 
 static void

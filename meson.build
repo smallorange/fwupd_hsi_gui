@@ -50,6 +50,12 @@ foreach define: set_defines
   config_h.set_quoted(define[0], define[1])
 endforeach
 
+distributor_logo = get_option('distributor_logo')
+if (distributor_logo != '')
+  config_h.set_quoted('DISTRIBUTOR_LOGO', distributor_logo,
+                      description: 'Define to absolute path of distributor logo')
+endif
+
 # meson does not support octal values, so it must be handled as a
 # string. See: https://github.com/mesonbuild/meson/issues/2047
 config_h.set('USER_DIR_MODE', '0700',
