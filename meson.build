@@ -54,6 +54,11 @@ distributor_logo = get_option('distributor_logo')
 if (distributor_logo != '')
   config_h.set_quoted('DISTRIBUTOR_LOGO', distributor_logo,
                       description: 'Define to absolute path of distributor logo')
+  dark_mode_distributor_logo = get_option('dark_mode_distributor_logo')
+  if (dark_mode_distributor_logo != '')
+    config_h.set_quoted('DARK_MODE_DISTRIBUTOR_LOGO', dark_mode_distributor_logo,
+                        description: 'Define to absolute path of distributor logo for use in dark mode')
+  endif
 endif
 
 # meson does not support octal values, so it must be handled as a

@@ -880,6 +880,7 @@ cc_info_panel_row_activated_cb (CcInfoOverviewPanel *self,
     open_software_update (self);
 }
 
+#if !defined(DISTRIBUTOR_LOGO) || defined(DARK_MODE_DISTRIBUTOR_LOGO)
 static gboolean
 use_dark_theme (CcInfoOverviewPanel *panel)
 {
@@ -897,11 +898,19 @@ use_dark_theme (CcInfoOverviewPanel *panel)
   g_object_get (settings, "gtk-theme-name", &theme_name, NULL);
   return (theme_name != NULL && g_str_has_suffix (theme_name, "dark")) ? TRUE : FALSE;
 }
+#endif
 
 static void
 setup_os_logo (CcInfoOverviewPanel *panel)
 {
 #ifdef DISTRIBUTOR_LOGO
+#ifdef DARK_MODE_DISTRIBUTOR_LOGO
+  if (use_dark_theme (panel))
+    {
+      gtk_image_set_from_file (panel->os_logo, DARK_MODE_DISTRIBUTOR_LOGO);
+      return;
+    }
+#endif
   gtk_image_set_from_file (panel->os_logo, DISTRIBUTOR_LOGO);
 #else
   g_autofree char *logo_name = g_get_os_info ("LOGO");
