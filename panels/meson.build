@@ -12,6 +12,7 @@ panels = [
   'info-overview',
   'keyboard',
   'location',
+  'firmware-security',
   'lock',
   'microphone',
   'mouse',

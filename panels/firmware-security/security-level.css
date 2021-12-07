@@ -1,0 +1,47 @@
+#icon_good {
+  color: @success_color;
+  background-color: alpha(@success_color, .25);
+  border-radius: 50%;
+}
+
+#icon_error {
+  color: @error_color;
+  background-color: alpha(@error_color, .25);
+  border-radius: 50%;
+}
+
+#icon_warning {
+  color: @warning_color;
+  background-color: alpha(@warning_color, .25);
+  border-radius: 50%;
+}
+
+#icon_neutral {
+  color: #828282;
+  background-color: alpha(#828282, .25);
+  border-radius: 50%;
+}
+
+#color_green {
+  color: @success_color;
+}
+
+#color_dim {
+  color: #afafaf;
+}
+
+row.success_icon_color image {
+  color: @success_color;
+}
+
+row.warning_icon_color image {
+  color: @warning_color;
+}
+
+row.error_icon_color image {
+  color: @error_color;
+}
+
+row.gray_icon_color image {
+  color: #afafaf;
+}
