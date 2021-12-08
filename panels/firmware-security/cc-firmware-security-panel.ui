@@ -208,17 +208,37 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkListBox" id="firmware_security_log_listbox">
+                  <object class="GtkScrolledWindow">
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="selection-mode">none</property>
+                    <property name="can-focus">True</property>
+                    <property name="shadow-type">in</property>
+                    <property name="width-request">80</property>
+                    <property name="height-request">200</property>
+                    <child>
+                      <object class="GtkViewport">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <child>
+                          <object class="GtkListBox" id="firmware_security_log_listbox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="selection-mode">none</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
-                </child>
+              </child>
               </object>
             </child>
           </object>

@@ -46,12 +46,14 @@ struct _CcfirmwareSecurityPanel
   GtkWidget       *hsi_label;
   GtkWidget       *hsi_description;
 
-  /* Secure boot button */
+  /* secure boot button */
   GtkWidget       *secure_boot_button_grid;
   GtkWidget       *secure_boot_icon;
   GtkWidget       *secure_boot_label;
   GtkWidget       *secure_boot_description;
 
+  /* event listbox */
+  GtkWidget       *firmware_security_log_listbox;
 
   GDBusProxy   *bus_proxy;
   GDBusProxy   *properties_bus_proxy;
@@ -128,6 +130,7 @@ fwupd_status_to_string(FwupdStatus status)
 	return NULL;
 }
 
+
 static void
 parse_iter_from_key(CcfirmwareSecurityPanel *self, const gchar *key, GVariant *value)
 {
@@ -179,27 +182,57 @@ event_hash_insert(CcfirmwareSecurityPanel *self, const gchar *app_name, GVariant
     {
       result = g_variant_get_uint32(value);
       printf("Key %s flag %u\n", app_name, result);
-      g_hash_table_insert(self->event_hash_table, app_name, result);
+      g_hash_table_insert(self->event_hash_table, g_strdup(app_name), GINT_TO_POINTER(result));
       return;
     }
   }
+}
+
+static GtkWidget*
+event_build_listbox_row(CcfirmwareSecurityPanel *self, const gchar *app_name, const gchar *results, const gchar *date_string)
+{
+  GtkWidget *box;
+  GtkWidget *row;
+  GtkWidget *date_label;
+  GtkWidget *app_name_label;
+  GtkWidget *change_label;
+
+  row = gtk_list_box_row_new ();
+  box = gtk_hbox_new(FALSE, 100);
+  g_object_set (box, "margin-start", 10, "margin-end", 10, NULL);
+  gtk_container_add (GTK_CONTAINER (row), box);
+  date_label = gtk_label_new(date_string);
+  app_name_label = gtk_label_new(app_name);
+  change_label = gtk_label_new(results);
+
+  gtk_box_pack_start(box, date_label, TRUE, FALSE, 10);
+  gtk_box_pack_start(box, app_name_label, TRUE, FALSE, 10);
+  gtk_box_pack_start(box, change_label, TRUE, FALSE, 10);
+
+  return row;
 }
 
 
 static void
 event_build_string(CcfirmwareSecurityPanel *self, const gchar *app_name, const guint64 results, const guint64 timestamp)
 {
+  GtkWidget *row;
   struct GDatetime *date = g_date_time_new_from_unix_local(timestamp);
   g_autofree gchar *date_string;
+  gchar change_string[100];
   guint64 *result_origin;
-  date_string = g_date_time_format(date, "\%Y-\%m-\%d \%H:\%m:\%S");
+  date_string = g_date_time_format(date, "\%F \%H:\%m:\%S");
   result_origin = g_hash_table_lookup(self->event_hash_table, app_name);
-  printf("%s %s changed from %s to %s %d to %d\n", date_string, fu_security_attr_get_name(app_name),
+  printf("%u, %s %s changed from %s to %s %d to %d\n",timestamp, date_string, fu_security_attr_get_name(app_name),
          fwupd_security_attr_result_to_string(results),
          fwupd_security_attr_result_to_string(GPOINTER_TO_INT(result_origin)),
          results,
          result_origin);
+  g_sprintf(change_string, "Changed from %s to %s", fwupd_security_attr_result_to_string(results),
+            fwupd_security_attr_result_to_string(GPOINTER_TO_INT(result_origin)));
   g_date_time_unref(date);
+  row = event_build_listbox_row(self,  fu_security_attr_get_name(app_name), change_string, date_string);
+  gtk_list_box_insert(self->firmware_security_log_listbox, row, -1);
 }
 
 
@@ -222,6 +255,7 @@ event_on_hit(CcfirmwareSecurityPanel *self, const gchar *app_name, GVariantIter 
     g_variant_unref(value);
   }
   event_build_string(self, app_name, result, timestamp);
+  g_hash_table_insert(self->event_hash_table, app_name, GINT_TO_POINTER(result));
 }
 
 
@@ -251,6 +285,7 @@ parse_event_variant_iter(CcfirmwareSecurityPanel *self, GVariantIter *iter)
     }
     g_variant_unref(value);
   }
+  gtk_widget_show_all (self->firmware_security_log_listbox);
 }
 
 
@@ -612,6 +647,9 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_label);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_description);
 
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_listbox);
+
+
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_click);
   gtk_widget_class_bind_template_callback (widget_class, on_secure_boot_button_click);
 }
@@ -628,30 +666,19 @@ cc_firmware_security_panel_init (CcfirmwareSecurityPanel *self)
                                                          g_str_equal,
                                                          g_free,
                                                          g_free);
-  self->hsi1_hash_table = g_hash_table_new_full (g_str_hash,
-                                                 g_str_equal,
-                                                 g_free,
-                                                 g_free);
-  self->hsi2_hash_table = g_hash_table_new_full (g_str_hash,
-                                                 g_str_equal,
-                                                 g_free,
-                                                 g_free);
-  self->hsi3_hash_table = g_hash_table_new_full (g_str_hash,
-                                                 g_str_equal,
-                                                 g_free,
-                                                 g_free);
-  self->hsi4_hash_table = g_hash_table_new_full (g_str_hash,
-                                                 g_str_equal,
-                                                 g_free,
-                                                 g_free);
-  self->hsi_general_hash_table = g_hash_table_new_full (g_str_hash,
-                                                        g_str_equal,
-                                                        g_free,
-                                                        g_free);
-  self->event_hash_table = g_hash_table_new_full (g_str_hash,
-                                                  g_str_equal,
-                                                  g_free,
-                                                  g_free);
+  self->hsi1_hash_table = g_hash_table_new (g_str_hash,
+                                            g_str_equal);
+  self->hsi2_hash_table = g_hash_table_new (g_str_hash,
+                                            g_str_equal);
+  self->hsi3_hash_table = g_hash_table_new (g_str_hash,
+                                            g_str_equal);
+  self->hsi4_hash_table = g_hash_table_new (g_str_hash,
+                                            g_str_equal);
+  self->hsi_general_hash_table = g_hash_table_new (g_str_hash,
+                                                   g_str_equal);
+  self->event_hash_table = g_hash_table_new (g_str_hash,
+                                             g_str_equal);
+
   g_dbus_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,  
                             G_DBUS_PROXY_FLAGS_NONE,
                             NULL,

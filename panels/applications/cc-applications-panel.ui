@@ -142,13 +142,13 @@
                             </child>
                             <child>
                               <object class="CcToggleRow" id="location">
-                                <property name="title" translatable="yes">Location Services</property>
+                                <property name="title" translatable="yes">Location Kate Kate Kate Services</property>
                                 <signal name="notify::allowed" handler="location_cb" object="CcApplicationsPanel" swapped="yes"/>
                               </object>
                             </child>
                             <child>
                               <object class="CcInfoRow" id="no_location">
-                                <property name="title" translatable="yes">Location Services</property>
+                                <property name="title" translatable="yes">Location Off Off Off Services</property>
                                 <property name="info" translatable="yes">Disabled</property>
                               </object>
                             </child>
