@@ -3193,3 +3193,261 @@ msgstr ""
 #: ../shell/shell.ui.h:2
 msgid "_All Settings"
 msgstr ""
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "SPI lock"
+msgstr "SPI lock"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "SPI BIOS region"
+msgstr "SPI BIOS region"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "SPI BIOS Descriptor"
+msgstr "SPI BIOS Descriptor"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Pre-boot DMA protection"
+msgstr "Pre-boot DMA protection"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel BootGuard"
+msgstr "Intel BootGuard"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel BootGuard verified boot"
+msgstr "Intel BootGuard verified boot"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel BootGuard ACM protected"
+msgstr "Intel BootGuard ACM protected"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel BootGuard error policy"
+msgstr "Intel BootGuard error policy"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel BootGuard OTP fuse"
+msgstr "Intel BootGuard OTP fuse"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel CET Enabled"
+msgstr "Intel CET Enabled"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel SMAP"
+msgstr "Intel SMAP"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Encrypted RAM"
+msgstr "Encrypted RAM"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "IOMMU"
+msgstr "IOMMU"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Linux kernel lockdown"
+msgstr "Linux kernel lockdown"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Linux kernel"
+msgstr "Linux kernel"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Linux swap"
+msgstr "Linux swap"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Suspend-to-ram"
+msgstr "Suspend-to-ram"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Suspend-to-idle"
+msgstr "Suspend-to-idle"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "UEFI platform key"
+msgstr "UEFI platform key"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "UEFI secure boot"
+msgstr "UEFI secure boot"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "TPM empty PCRs"
+msgstr "TPM empty PCRs"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "TPM PCR0 reconstruction"
+msgstr "TPM PCR0 reconstruction"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "TPM v2.0"
+msgstr "TPM v2.0"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "MEI manufacturing mode"
+msgstr "MEI manufacturing mode"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "MEI override"
+msgstr "MEI override"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "MEI version"
+msgstr "MEI version"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Firmware updates"
+msgstr "Firmware updates"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Firmware attestation"
+msgstr "Firmware attestation"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "fwupd plugins"
+msgstr "fwupd plugins"
+
+#: ../panels/cc-firmware-security-utils.c
+msgid "Intel DCI debugger"
+msgstr "Intel DCI debugger"
+
+# ../panels/cc-firmware-security-utils.c:209
+msgid "none"
+msgstr "none"
+
+# ../panels/cc-firmware-security-utils.c:214
+msgid "success"
+msgstr "success"
+
+# ../panels/cc-firmware-security-utils.c:216
+msgid "obsoleted"
+msgstr "obsoleted"
+
+# ../panels/cc-firmware-security-utils.c:218
+msgid "runtime-updates"
+msgstr "runtime-updates"
+
+# ../panels/cc-firmware-security-utils.c:220
+msgid "runtime-attestation"
+msgstr "runtime-attestation"
+
+# ../panels/cc-firmware-security-utils.c:222
+msgid "runtime-issue"
+msgstr "runtime-issue"
+
+# ../panels/cc-firmware-security-utils.c:230
+msgid "valid"
+msgstr "valid"
+
+# ../panels/cc-firmware-security-utils.c:232
+msgid "not-valid"
+msgstr "not-valid"
+
+# ../panels/cc-firmware-security-utils.c:234
+msgid "enabled"
+msgstr "enabled"
+
+# ../panels/cc-firmware-security-utils.c:236
+msgid "not-enabled"
+msgstr "not-enabled"
+
+# ../panels/cc-firmware-security-utils.c:238
+msgid "locked"
+msgstr "locked"
+
+# ../panels/cc-firmware-security-utils.c:240
+msgid "not-locked"
+msgstr "not-locked"
+
+# ../panels/cc-firmware-security-utils.c:242
+msgid "encrypted"
+msgstr "encrypted"
+
+# ../panels/cc-firmware-security-utils.c:244
+msgid "not-encrypted"
+msgstr "not-encrypted"
+
+# ../panels/cc-firmware-security-utils.c:246
+msgid "tainted"
+msgstr "tainted"
+
+# ../panels/cc-firmware-security-utils.c:248
+msgid "not-tainted"
+msgstr "not-tainted"
+
+# ../panels/cc-firmware-security-utils.c:250
+msgid "found"
+msgstr "found"
+
+# ../panels/cc-firmware-security-utils.c:252
+msgid "not-found"
+msgstr "not-found"
+
+# ../panels/cc-firmware-security-utils.c:254
+msgid "supported"
+msgstr "supported"
+
+# ../panels/cc-firmware-security-utils.c:256
+msgid "not-supported"
+msgstr "not-supported"
+
+# ../panels/cc-firmware-security-panel.c:95
+msgid "Secure Boot is Active"
+msgstr "Secure Boot is Active"
+
+# ../panels/cc-firmware-security-panel.c:95
+msgid "Secure boot active description"
+msgstr "Secure boot prevents malicious software from being loaded when the device starts\n\nFor more information on secure boot, contact the manufacture support or IT support."
+
+# ../panels/cc-firmware-security-panel.c:102
+msgid "Secure Boot is Inactive"
+msgstr "Secure Boot is Inactive"
+
+# ../panels/cc-firmware-security-panel.c:102
+msgid "Secure boot inactive description"
+msgstr "Secure boot prevents malicious software from being loaded when the device starts\n\nFor more information on secure boot, contact the manufacture support or IT support."
+
+# ../panels/cc-firmware-security-dialog.c:102
+msgid "No Protection"
+msgstr "No Protection"
+
+# ../panels/cc-firmware-security-dialog.c:103
+msgid "No Protection description"
+msgstr "No Protection description"
+
+# ../panels/cc-firmware-security-dialog.c:110
+msgid "Basic Protection"
+msgstr "Basic Protection"
+
+# ../panels/cc-firmware-security-dialog.c:111
+msgid "Basic Protection description"
+msgstr "Basic Protection description"
+
+# ../panels/cc-firmware-security-dialog.c:117
+msgid "Minimum Protection"
+msgstr "Minimum Protection"
+
+# ../panels/cc-firmware-security-dialog.c:118
+msgid "Minimum Protection description"
+msgstr "Minimum Protection description"
+
+# ../panels/cc-firmware-security-dialog.c:126
+msgid "Extended Protection"
+msgstr "Extended Protection"
+
+# ../panels/cc-firmware-security-dialog.c:127
+msgid "Extended Protection description"
+msgstr "Extended Protection description"
+
+
+# ../panels/cc-firmware-security-dialog.c:132
+msgid "Incorrect HSI"
+msgstr "Incorrect HSI"
+
+# ../panels/cc-firmware-security-dialog.c:133
+msgid "Incorrect HSI description"
+msgstr "Incorrect HSI description"
+

@@ -45,9 +45,6 @@ struct _CcFirmwareSecurityDialog {
   GtkWidget            *firmware_security_dialog_basic_icon;
   GtkWidget            *firmware_security_dialog_extend_icon;
 
-  /* Page1 attr detail */
-  GtkWidget            *firmware_security_dialog_attrs_listbox;
-
 	/* Page 2 attr*/
 	GtkWidget						 *firmware_security_dialog_hsi1_listbox;
 	GtkWidget						 *firmware_security_dialog_hsi2_listbox;
@@ -56,7 +53,7 @@ struct _CcFirmwareSecurityDialog {
 
   /* HSI status information */
   GtkWidget            *firmware_security_dialog_hsi_label;
-  gboolean             *is_created;
+  gboolean             is_created;
 
   /* HSI attr hash */
   GHashTable           *hsi_attr_hash;
@@ -91,6 +88,15 @@ set_dialog_item_laye1(CcFirmwareSecurityDialog *self, const gchar *icon_name,
 static void
 update_dialog(CcFirmwareSecurityDialog *self)
 {
+  gtk_image_set_from_icon_name(self->firmware_security_dialog_min_icon,
+                               "dialog-error-symbolic",
+                               24);
+  gtk_image_set_from_icon_name(self->firmware_security_dialog_basic_icon,
+                               "dialog-error-symbolic",
+                               24);
+  gtk_image_set_from_icon_name(self->firmware_security_dialog_extend_icon,
+                               "dialog-error-symbolic",
+                               24);
 	gtk_widget_set_opacity(self->firmware_security_dialog_min_icon, 0.25);
 	gtk_widget_set_opacity(self->firmware_security_dialog_basic_icon, 0.25);
 	gtk_widget_set_opacity(self->firmware_security_dialog_extend_icon, 0.25);
@@ -99,38 +105,47 @@ update_dialog(CcFirmwareSecurityDialog *self)
     case 0:
             set_dialog_item_laye1(self,
                                   "dialog-warning-symbolic",
-                                  "No Protection",
-                                  "No Protection xxxxxxxx");
+                                  _("No Protection"),
+                                  _("No Protection description"));
 
             break;
     case 1:
+            gtk_image_set_from_icon_name(self->firmware_security_dialog_min_icon,
+                               "emblem-default-symbolic",
+                               24);
 						gtk_widget_set_opacity(self->firmware_security_dialog_min_icon, 1);
             set_dialog_item_laye1(self,
                                   "security-low-symbolic",
-                                  "Minimum Protection",
-                                  "Minimum Protection xxxxxxxx");
+                                  _("Basic Protection"),
+                                  _("Basic Protection description"));
             break;
     case 2:
+            gtk_image_set_from_icon_name(self->firmware_security_dialog_basic_icon,
+                                         "emblem-default-symbolic",
+                                         24);
 						gtk_widget_set_opacity(self->firmware_security_dialog_basic_icon, 1);
             set_dialog_item_laye1(self,
                                   "security-medium-symbolic",
-                                  "Basic Protection",
-                                  "Basic Protection xxxxxxxx");
+                                  _("Medium Protection"),
+                                  _("Minimum Protection description"));
             break;
     case 3:
 						gtk_widget_set_opacity(self->firmware_security_dialog_extend_icon, 1);
     case 4:
+            gtk_image_set_from_icon_name(self->firmware_security_dialog_extend_icon,
+                                         "emblem-default-symbolic",
+                                         24);
 						gtk_widget_set_opacity(self->firmware_security_dialog_extend_icon, 1);
             set_dialog_item_laye1(self,
                                   "security-high-symbolic",
-                                  "Extended Protection",
-                                  "Extended Protection xxxxxxxx");
+                                  _("Extended Protection"),
+                                  _("Extended Protection description"));
             break;
     default:
             set_dialog_item_laye1(self,
                                   "dialog-warning-symbolic",
-                                  "Incorrect HSI",
-                                  "Incorrect HSI xxxxxxxx");
+                                  _("Incorrect HSI"),
+                                  _("Incorrect HSI description"));
   }
 }
 
@@ -143,10 +158,12 @@ create_row(const gchar *icon_name, const gchar *item_name)
   GtkWidget *label;
 
   row = gtk_list_box_row_new ();
-  box = gtk_hbox_new(FALSE, 200);
-  g_object_set (box, "margin-start", 10, "margin-end", 10, NULL);
+  box = gtk_hbox_new(FALSE, 15);
+  gtk_list_box_row_set_selectable(row, FALSE);
+  g_object_set (box, "margin-start", 10, "margin-end", 10, "margin-top", 5, "margin-bottom", 5, NULL);
   gtk_container_add (GTK_CONTAINER (row), box);
   icon = gtk_image_new_from_icon_name(icon_name, gtk_icon_size_from_name("GTK_ICON_SIZE_LARGE_TOOLBAR"));
+  gtk_image_set_pixel_size(icon, 16);
   label = gtk_label_new(fu_security_attr_get_name(item_name));
   gtk_box_pack_start(box, icon, FALSE, TRUE, 10);
   gtk_box_pack_start(box, label, FALSE, TRUE, 10);
@@ -190,7 +207,6 @@ update_hsi_listbox(CcFirmwareSecurityDialog *self, const gint hsi_level)
   for(item = g_list_first(hash_keys); item != NULL; item = g_list_next(item))
 	{
     flags =  GPOINTER_TO_INT(g_hash_table_lookup(hsi_hash, item->data));
-    printf("item-> %s flags-> %d\n", item->data, flags);
     if(firmware_security_attr_has_flag(flags, FWUPD_SECURITY_ATTR_FLAG_SUCCESS))
       row = create_row("emblem-default-symbolic", item->data);
     else
@@ -222,24 +238,23 @@ on_hsi_click(GtkWidget *widget, gpointer data)
     update_hsi_listbox(self, 4);
 		self->is_created = TRUE;
 	}
-  
-	gtk_widget_show_all (self->firmware_security_dialog_hsi1_listbox);
-	gtk_widget_show_all (self->firmware_security_dialog_hsi2_listbox);
-	gtk_widget_show_all (self->firmware_security_dialog_hsi3_listbox);
-	gtk_widget_show_all (self->firmware_security_dialog_hsi4_listbox);
+
+  if(!g_strcmp0(gtk_widget_get_name(widget), "firmware_security_min_button"))
+    gtk_widget_show_all (self->firmware_security_dialog_hsi1_listbox);
+  else if(!g_strcmp0(gtk_widget_get_name(widget), "firmware_security_basic_button"))
+    gtk_widget_show_all (self->firmware_security_dialog_hsi2_listbox);
+  else if(!g_strcmp0(gtk_widget_get_name(widget), "firmware_security_extend_button"))
+  {
+    gtk_widget_show_all (self->firmware_security_dialog_hsi3_listbox);
+    gtk_widget_show_all (self->firmware_security_dialog_hsi4_listbox);
+  }
 }
 
 static void
 cc_firmware_security_dialog_finalize (GObject *object)
 {
   CcFirmwareSecurityDialog *dialog = CC_FIRMWARE_SECURITY_DIALOG (object);
-
- /* g_clear_object (&dialog->settings);
-  g_clear_object (&dialog->master_settings);
-  g_clear_pointer (&dialog->app_id, g_free);
-  g_clear_object (&dialog->perm_store);
-  */
-
+ 
   G_OBJECT_CLASS (cc_firmware_security_dialog_parent_class)->dispose (object);
 }
 
@@ -258,7 +273,6 @@ cc_firmware_security_dialog_class_init (CcFirmwareSecurityDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_body_label);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi_label);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_stack);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_attrs_listbox);
 	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_min_icon);
 	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_basic_icon);
 	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_extend_icon);

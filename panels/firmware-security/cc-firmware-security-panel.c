@@ -77,70 +77,6 @@ struct _CcfirmwareSecurityPanel
 CC_PANEL_REGISTER (CcfirmwareSecurityPanel, cc_firmware_security_panel)
 
 
-typedef enum {
-	FWUPD_STATUS_UNKNOWN,
-	FWUPD_STATUS_IDLE,
-	FWUPD_STATUS_LOADING,
-	FWUPD_STATUS_DECOMPRESSING,
-	FWUPD_STATUS_DEVICE_RESTART,
-	FWUPD_STATUS_DEVICE_WRITE,
-	FWUPD_STATUS_DEVICE_VERIFY,
-	FWUPD_STATUS_SCHEDULING,
-	FWUPD_STATUS_DOWNLOADING,
-	FWUPD_STATUS_DEVICE_READ,
-	FWUPD_STATUS_DEVICE_ERASE,
-	FWUPD_STATUS_WAITING_FOR_AUTH,
-	FWUPD_STATUS_DEVICE_BUSY,
-	FWUPD_STATUS_SHUTDOWN,
-	/*< private >*/
-	FWUPD_STATUS_LAST
-} FwupdStatus;
-
-const gchar *
-fwupd_status_to_string(FwupdStatus status)
-{
-	if (status == FWUPD_STATUS_UNKNOWN)
-		return "unknown";
-	if (status == FWUPD_STATUS_IDLE)
-		return "idle";
-	if (status == FWUPD_STATUS_DECOMPRESSING)
-		return "decompressing";
-	if (status == FWUPD_STATUS_LOADING)
-		return "loading";
-	if (status == FWUPD_STATUS_DEVICE_RESTART)
-		return "device-restart";
-	if (status == FWUPD_STATUS_DEVICE_WRITE)
-		return "device-write";
-	if (status == FWUPD_STATUS_DEVICE_READ)
-		return "device-read";
-	if (status == FWUPD_STATUS_DEVICE_ERASE)
-		return "device-erase";
-	if (status == FWUPD_STATUS_DEVICE_VERIFY)
-		return "device-verify";
-	if (status == FWUPD_STATUS_DEVICE_BUSY)
-		return "device-busy";
-	if (status == FWUPD_STATUS_SCHEDULING)
-		return "scheduling";
-	if (status == FWUPD_STATUS_DOWNLOADING)
-		return "downloading";
-	if (status == FWUPD_STATUS_WAITING_FOR_AUTH)
-		return "waiting-for-auth";
-	if (status == FWUPD_STATUS_SHUTDOWN)
-		return "shutdown";
-	return NULL;
-}
-
-
-static void
-parse_iter_from_key(CcfirmwareSecurityPanel *self, const gchar *key, GVariant *value)
-{
-	if (g_strcmp0 (key, "AppstreamId") == 0) {
-    printf("Appstream: %s\n", g_variant_get_string (value, NULL));
-		return;
-	}
-}
-
-
 static void
 set_secure_boot_button_view(CcfirmwareSecurityPanel *self)
 {
@@ -155,16 +91,16 @@ set_secure_boot_button_view(CcfirmwareSecurityPanel *self)
   switch(flags % 2)
   {
     case 1:
-              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-low-symbolic", 70);
-              gtk_label_set_text(self->secure_boot_label, "Secure Boot is Active");
-              gtk_label_set_text(self->secure_boot_description, "Secure boot prevents malicious software from being loaded when the device starts\n\nFor more information on secure boot, contact the manufacture support or IT support.");
+              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-high-symbolic", 70);
+              gtk_label_set_text(self->secure_boot_label, _("Secure Boot is Active"));
+              gtk_label_set_text(self->secure_boot_description, _("Secure boot active description"));
               self->is_secure_boot = TRUE;
               break;
     case 2:
     default:
               gtk_image_set_from_icon_name(self->secure_boot_icon, "security-low-symbolic", 70);
-              gtk_label_set_text(self->secure_boot_label, "Secure Boot is Inactive");
-              gtk_label_set_text(self->secure_boot_description, "Secure boot prevents malicious software from being loaded when the device starts\n\nFor more information on secure boot, contact the manufacture support or IT support.");
+              gtk_label_set_text(self->secure_boot_label, _("Secure Boot is Inactive"));
+              gtk_label_set_text(self->secure_boot_description, _("Secure boot inactive description"));
               self->is_secure_boot = FALSE;
   }
 }
@@ -181,7 +117,6 @@ event_hash_insert(CcfirmwareSecurityPanel *self, const gchar *app_name, GVariant
     if(!g_strcmp0(key, "HsiResult"))
     {
       result = g_variant_get_uint32(value);
-      printf("Key %s flag %u\n", app_name, result);
       g_hash_table_insert(self->event_hash_table, g_strdup(app_name), GINT_TO_POINTER(result));
       return;
     }
@@ -192,18 +127,34 @@ static GtkWidget*
 event_build_listbox_row(CcfirmwareSecurityPanel *self, const gchar *app_name, const gchar *results, const gchar *date_string)
 {
   GtkWidget *box;
+  GtkWidget *label_box;
   GtkWidget *row;
   GtkWidget *date_label;
   GtkWidget *app_name_label;
   GtkWidget *change_label;
 
   row = gtk_list_box_row_new ();
-  box = gtk_hbox_new(FALSE, 100);
-  g_object_set (box, "margin-start", 10, "margin-end", 10, NULL);
+  box = gtk_hbox_new(FALSE, 0);
+  g_object_set (box, "margin-start", 1, "margin-end", 1, NULL);
   gtk_container_add (GTK_CONTAINER (row), box);
   date_label = gtk_label_new(date_string);
   app_name_label = gtk_label_new(app_name);
   change_label = gtk_label_new(results);
+
+  gtk_widget_set_margin_top(box, 5);
+  gtk_widget_set_margin_bottom(box, 5);
+
+  gtk_box_set_homogeneous(box, FALSE);
+  gtk_box_set_baseline_position(box, GTK_BASELINE_POSITION_CENTER);
+  gtk_box_set_spacing(box, 1);
+  gtk_widget_set_halign(box, GTK_ALIGN_START);
+
+  gtk_label_set_xalign(app_name_label, 0.0);
+  gtk_label_set_yalign(app_name_label, 0.0);
+  gtk_label_set_width_chars(app_name_label, 20);
+  gtk_label_set_ellipsize (app_name_label, PANGO_ELLIPSIZE_END);
+  gtk_label_set_max_width_chars (app_name_label, 16);
+
 
   gtk_box_pack_start(box, date_label, TRUE, FALSE, 10);
   gtk_box_pack_start(box, app_name_label, TRUE, FALSE, 10);
@@ -223,11 +174,6 @@ event_build_string(CcfirmwareSecurityPanel *self, const gchar *app_name, const g
   guint64 *result_origin;
   date_string = g_date_time_format(date, "\%F \%H:\%m:\%S");
   result_origin = g_hash_table_lookup(self->event_hash_table, app_name);
-  printf("%u, %s %s changed from %s to %s %d to %d\n",timestamp, date_string, fu_security_attr_get_name(app_name),
-         fwupd_security_attr_result_to_string(results),
-         fwupd_security_attr_result_to_string(GPOINTER_TO_INT(result_origin)),
-         results,
-         result_origin);
   g_sprintf(change_string, "Changed from %s to %s", fwupd_security_attr_result_to_string(results),
             fwupd_security_attr_result_to_string(GPOINTER_TO_INT(result_origin)));
   g_date_time_unref(date);
@@ -613,7 +559,14 @@ cc_firmware_security_panel_finalize (GObject *object)
 {
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (object);
  
+  g_clear_pointer(&self->hsi1_hash_table, g_hash_table_unref);
+  g_clear_pointer(&self->hsi2_hash_table, g_hash_table_unref);
+  g_clear_pointer(&self->hsi3_hash_table, g_hash_table_unref);
+  g_clear_pointer(&self->hsi4_hash_table, g_hash_table_unref);
+  g_clear_pointer(&self->firmware_security_attrs, g_hash_table_unref);
 
+  g_clear_object(&self->bus_proxy);
+  g_clear_object(&self->properties_bus_proxy);
 
   G_OBJECT_CLASS (cc_firmware_security_panel_parent_class)->finalize (object);
 }

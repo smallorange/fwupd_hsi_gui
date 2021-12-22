@@ -56,24 +56,17 @@ static void
 update_dialog(CcFirmwareSecurityBootDialog *self)
 {
   if(self->is_secure_boot == TRUE)
-    update_dialog_items(self, "Secure Boot is Active",
-                       "Secure boot prevents malicious software from being loading when device starts.\n\nFor more information, on secure boot, contact the hardware manufactoure or IT support.");
+    update_dialog_items(self, _("Secure Boot is Active"),
+                        _("Secure boot active description"));
   else
-    update_dialog_items(self, "Secure Boot is Inactive",
-                        "Secure boot prevents malicious software from being loading when device starts.\n\nFor more information, on secure boot, contact the hardware manufactoure or IT support.");
-
+    update_dialog_items(self, _("Secure Boot is Inactive"),
+                        _("Secure boot inactive description"));
 }
 
 static void
 cc_firmware_security_boot_dialog_finalize (GObject *object)
 {
   CcFirmwareSecurityBootDialog *dialog = CC_FIRMWARE_SECURITY_BOOT_DIALOG (object);
-
- /* g_clear_object (&dialog->settings);
-  g_clear_object (&dialog->master_settings);
-  g_clear_pointer (&dialog->app_id, g_free);
-  g_clear_object (&dialog->perm_store);
-  */
 
   G_OBJECT_CLASS (cc_firmware_security_boot_dialog_parent_class)->dispose (object);
 }

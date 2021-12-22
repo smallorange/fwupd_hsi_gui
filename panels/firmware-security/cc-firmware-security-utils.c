@@ -209,17 +209,17 @@ const gchar *
 fwupd_security_attr_flag_to_string(FwupdSecurityAttrFlags flag)
 {
 	if (flag == FWUPD_SECURITY_ATTR_FLAG_NONE)
-		return "none";
+		return _("none");
 	if (flag == FWUPD_SECURITY_ATTR_FLAG_SUCCESS)
-		return "success";
+		return _("success");
 	if (flag == FWUPD_SECURITY_ATTR_FLAG_OBSOLETED)
-		return "obsoleted";
+		return _("obsoleted");
 	if (flag == FWUPD_SECURITY_ATTR_FLAG_RUNTIME_UPDATES)
-		return "runtime-updates";
+		return _("runtime-updates");
 	if (flag == FWUPD_SECURITY_ATTR_FLAG_RUNTIME_ATTESTATION)
-		return "runtime-attestation";
+		return _("runtime-attestation");
 	if (flag == FWUPD_SECURITY_ATTR_FLAG_RUNTIME_ISSUE)
-		return "runtime-issue";
+		return _("runtime-issue");
 	return NULL;
 }
 
@@ -227,32 +227,32 @@ const gchar *
 fwupd_security_attr_result_to_string(FwupdSecurityAttrResult result)
 {
 	if (result == FWUPD_SECURITY_ATTR_RESULT_VALID)
-		return "valid";
+		return _("valid");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_VALID)
-		return "not-valid";
+		return _("not-valid");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_ENABLED)
-		return "enabled";
+		return _("enabled");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED)
-		return "not-enabled";
+		return _("not-enabled");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_LOCKED)
-		return "locked";
+		return _("locked");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_LOCKED)
-		return "not-locked";
+		return _("not-locked");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_ENCRYPTED)
-		return "encrypted";
+		return _("encrypted");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_ENCRYPTED)
-		return "not-encrypted";
+		return _("not-encrypted");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_TAINTED)
-		return "tainted";
+		return _("tainted");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_TAINTED)
-		return "not-tainted";
+		return _("not-tainted");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_FOUND)
-		return "found";
+		return _("found");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_FOUND)
-		return "not-found";
+		return _("not-found");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_SUPPORTED)
-		return "supported";
+		return _("supported");
 	if (result == FWUPD_SECURITY_ATTR_RESULT_NOT_SUPPORTED)
-		return "not-supported";
+		return _("not-supported");
 	return NULL;
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="CcFirmwareSecurityDialog" parent="GtkDialog">
-    <property name="width_request">600</property>
+    <property name="width_request">400</property>
     <property name="can_focus">False</property>
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
@@ -103,12 +103,12 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="name">firmware_security_min_button</property>
                         <signal name="clicked" handler="on_hsi_click" swapped="no"/>
                         <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <signal name="button-press-event" handler="on_hsi_click" swapped="no"/>
                             <child>
                               <object class="GtkImage" id="firmware_security_dialog_min_icon">
                                 <property name="visible">True</property>
@@ -129,7 +129,7 @@
                                 <property name="margin-left">10</property>
                                 <property name="label" translatable="yes">Minimum Protection</property>
                                 <attributes>
-                                  <attribute name="scale" value="2"/>
+                                  <attribute name="scale" value="1.5"/>
                                 </attributes>
                               </object>
                               <packing>
@@ -168,6 +168,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="name">firmware_security_basic_button</property>
                         <signal name="clicked" handler="on_hsi_click" swapped="no"/>
                         <child>
                           <object class="GtkBox">
@@ -195,7 +196,7 @@
                                 <property name="margin-left">10</property>
                                 <property name="label" translatable="yes">Basic Protection</property>
                                 <attributes>
-                                  <attribute name="scale" value="2"/>
+                                  <attribute name="scale" value="1.5"/>
                                 </attributes>
                               </object>
                               <packing>
@@ -234,6 +235,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="name">firmware_security_extend_button</property>
                         <signal name="clicked" handler="on_hsi_click" swapped="no"/>
                         <child>
                           <object class="GtkBox">
@@ -261,7 +263,7 @@
                                 <property name="margin-left">10</property>
                                 <property name="label" translatable="yes">Extended Protection</property>
                                 <attributes>
-                                  <attribute name="scale" value="2"/>
+                                  <attribute name="scale" value="1.5"/>
                                 </attributes>
                               </object>
                               <packing>
@@ -323,43 +325,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkListBox" id="firmware_security_dialog_attrs_listbox">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="margin-left">20</property>
-                <property name="margin-right">20</property>
-                <property name="margin-top">20</property>
-                <property name="margin-bottom">20</property>
-              </object>
-              <packing>
-                <property name="name">page1</property>
-                <property name="title" translatable="yes">page1</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <property name="label" translatable="yes">HSI 1</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="scale" value="1.2"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
                 <child>
                   <object class="GtkListBox" id="firmware_security_dialog_hsi1_listbox">
                     <property name="visible">True</property>
@@ -369,24 +338,6 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <property name="label" translatable="yes">HSI 2</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="scale" value="1.2"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -401,24 +352,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <property name="label" translatable="yes">HSI 3</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="scale" value="1.2"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkListBox" id="firmware_security_dialog_hsi3_listbox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -427,24 +360,6 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <property name="label" translatable="yes">HSI 4</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="scale" value="1.2"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
