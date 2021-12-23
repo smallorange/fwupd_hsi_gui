@@ -5,12 +5,14 @@
     <property name="can_focus">False</property>
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
+    <property name="decorated">False</property>
     <signal name="response" handler="gtk_widget_destroy" swapped="no"/>
+
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
+        <property name="spacing">0</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can-focus">False</property>
@@ -28,6 +30,41 @@
             <property name="position">0</property>
           </packing>
         </child>
+       <child>
+          <object class="GtkHeaderBar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="valign">center</property>
+            <property name="title" translatable="yes">Firmware Security</property>
+            <property name="spacing">0</property>
+            <property name="show-close-button">True</property>
+            <child>
+              <object class="GtkButton" id="fw_back_button">
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <signal name="clicked" handler="on_fw_back_button_click" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="icon-name">carousel-arrow-previous-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="image-button"/>
+                </style>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+
         <child>
           <object class="GtkStack" id="firmware_security_dialog_stack">
             <property name="visible">True</property>

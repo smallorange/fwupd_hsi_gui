@@ -37,6 +37,8 @@ struct _CcFirmwareSecurityDialog {
 
   GtkWidget           *firmware_security_dialog_stack;
 
+  GtkWidget           *fw_back_button;
+
   /* Page0 one*/
   GtkWidget            *firmware_security_dialog_icon;
   GtkWidget            *firmware_security_dialog_title_label;
@@ -248,7 +250,23 @@ on_hsi_click(GtkWidget *widget, gpointer data)
     gtk_widget_show_all (self->firmware_security_dialog_hsi3_listbox);
     gtk_widget_show_all (self->firmware_security_dialog_hsi4_listbox);
   }
+  gtk_widget_set_visible(self->fw_back_button, TRUE);
 }
+
+static void
+on_fw_back_button_click(GtkWidget *widget, gpointer data)
+{
+  CcFirmwareSecurityDialog *self;
+
+  self = data;
+  gtk_stack_set_visible_child_name(self->firmware_security_dialog_stack, "page0");
+  gtk_widget_set_visible(self->fw_back_button, FALSE);
+  gtk_widget_set_visible (self->firmware_security_dialog_hsi1_listbox, FALSE);
+  gtk_widget_set_visible (self->firmware_security_dialog_hsi2_listbox, FALSE);
+  gtk_widget_set_visible (self->firmware_security_dialog_hsi3_listbox, FALSE);
+  gtk_widget_set_visible (self->firmware_security_dialog_hsi4_listbox, FALSE);
+}
+
 
 static void
 cc_firmware_security_dialog_finalize (GObject *object)
@@ -280,8 +298,10 @@ cc_firmware_security_dialog_class_init (CcFirmwareSecurityDialogClass *klass)
 	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi2_listbox);
 	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi3_listbox);
 	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi4_listbox);
+	gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, fw_back_button);
 
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_click);
+  gtk_widget_class_bind_template_callback (widget_class, on_fw_back_button_click);
 }
 
 void
