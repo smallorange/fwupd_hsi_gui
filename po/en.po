@@ -3416,7 +3416,7 @@ msgstr "No Protection"
 
 # ../panels/cc-firmware-security-dialog.c:103
 msgid "No Protection description"
-msgstr "No Protection description"
+msgstr "This device has no protection against hardware security issues. Please check all the firmware and hardware configurations or contact the manufacture support or IT support."
 
 # ../panels/cc-firmware-security-dialog.c:110
 msgid "Basic Protection"
@@ -3424,7 +3424,7 @@ msgstr "Basic Protection"
 
 # ../panels/cc-firmware-security-dialog.c:111
 msgid "Basic Protection description"
-msgstr "Basic Protection description"
+msgstr "This device has basic protection against hardware security issues. This is the basic level of protection against the typical security threads."
 
 # ../panels/cc-firmware-security-dialog.c:117
 msgid "Minimum Protection"
@@ -3432,7 +3432,7 @@ msgstr "Minimum Protection"
 
 # ../panels/cc-firmware-security-dialog.c:118
 msgid "Minimum Protection description"
-msgstr "Minimum Protection description"
+msgstr "This device has minimal protection against hardware security issues. This is the lowest level of protection against the simplest security threads."
 
 # ../panels/cc-firmware-security-dialog.c:126
 msgid "Extended Protection"
@@ -3440,7 +3440,7 @@ msgstr "Extended Protection"
 
 # ../panels/cc-firmware-security-dialog.c:127
 msgid "Extended Protection description"
-msgstr "Extended Protection description"
+msgstr "This device has extended protection against hardware security issues. This is the highest level of protection against the advanced security threads."
 
 
 # ../panels/cc-firmware-security-dialog.c:132
