@@ -49,9 +49,10 @@
                             <property name="can-focus">False</property>
                             <property name="halign">center</property>
                             <property name="valign">center</property>
-                            <property name="pixel-size">70</property>
+                            <property name="height-request">90</property>
+                            <property name="width-request">90</property>
                             <property name="icon-name">security-low-symbolic</property>
-                            <property name="icon_size">3</property>
+                            <property name="pixel-size">50</property>
                           </object>
                           <packing>
                             <property name="index">-1</property>
@@ -128,7 +129,11 @@
                       <object class="GtkImage" id="secure_boot_icon">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="pixel-size">70</property>
+                        <property name="pixel-size">50</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="height-request">90</property>
+                        <property name="width-request">90</property>
                         <property name="icon-name">system-reboot-symbolic</property>
                       </object>
                       <packing>

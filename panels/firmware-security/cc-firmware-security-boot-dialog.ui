@@ -3,7 +3,7 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <template class="CcFirmwareSecurityBootDialog" parent="GtkDialog">
-    <property name="width_request">400</property>
+    <property name="width_request">350</property>
     <property name="can_focus">False</property>
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
@@ -41,7 +41,11 @@
                 <property name="can-focus">False</property>
                 <property name="margin-top">20</property>
                 <property name="margin-bottom">10</property>
-                <property name="pixel-size">70</property>
+                <property name="pixel-size">50</property>
+                <property name="width-request">90</property>
+                <property name="height-request">90</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
                 <property name="icon-name">system-reboot-symbolic</property>
                 <property name="icon_size">6</property>
               </object>
@@ -82,8 +86,11 @@
                 <property name="margin-bottom">20</property>
                 <property name="label" translatable="yes">Secure boot prevents malicious software from being loading when device starts.\n\nFor more information, on secure boot, contact the hardware manufactoure or IT support.</property>
                 <property name="wrap">True</property>
-              <!--  <property name="width-chars">15</property>
-                <property name="max-width-chars">15</property> -->
+                <property name="width-chars">20</property>
+                <property name="max-width-chars">20</property>
+                <property name="width-request">200</property>
+                <property name="justify">center</property>
+                
               </object>
               <packing>
                 <property name="expand">False</property>

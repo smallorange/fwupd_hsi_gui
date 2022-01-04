@@ -91,16 +91,18 @@ set_secure_boot_button_view(CcfirmwareSecurityPanel *self)
   switch(flags % 2)
   {
     case 1:
-              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-high-symbolic", 70);
+              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-high-symbolic", 50);
               gtk_label_set_text(self->secure_boot_label, _("Secure Boot is Active"));
               gtk_label_set_text(self->secure_boot_description, _("Secure boot active description"));
+              gtk_widget_set_name(self->secure_boot_icon, "icon_good");
               self->is_secure_boot = TRUE;
               break;
     case 2:
     default:
-              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-low-symbolic", 70);
+              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-low-symbolic", 50);
               gtk_label_set_text(self->secure_boot_label, _("Secure Boot is Inactive"));
               gtk_label_set_text(self->secure_boot_description, _("Secure boot inactive description"));
+              gtk_widget_set_name(self->secure_boot_icon, "icon_error");
               self->is_secure_boot = FALSE;
   }
 }
@@ -165,7 +167,8 @@ event_build_listbox_row(CcfirmwareSecurityPanel *self, const gchar *app_name, co
 
 
 static void
-event_build_string(CcfirmwareSecurityPanel *self, const gchar *app_name, const guint64 results, const guint64 timestamp)
+event_build_string(CcfirmwareSecurityPanel *self, const gchar *app_name,
+                   const guint64 results, const guint64 timestamp)
 {
   GtkWidget *row;
   struct GDatetime *date = g_date_time_new_from_unix_local(timestamp);
@@ -457,9 +460,10 @@ static gint hsi_parser(const gchar *hsi_string)
 
 static void
 set_hsi_button_view_contain(CcfirmwareSecurityPanel *self, const gchar *icon_name,
-                            gchar *title, const gchar *description)
+                            const gchar *style, gchar *title, const gchar *description)
 {
-  gtk_image_set_from_icon_name(self->hsi_icon, icon_name, 70);
+  gtk_image_set_from_icon_name(self->hsi_icon, icon_name, 50);
+  gtk_widget_set_name(self->hsi_icon, style);
   gtk_label_set_text(self->hsi_label, title);
   gtk_label_set_text(self->hsi_description, description);
 }
@@ -471,23 +475,33 @@ set_hsi_button_view(CcfirmwareSecurityPanel *self)
   switch(self->hsi_number)
   {
     case 0:
-      set_hsi_button_view_contain(self, "security-low-symbolic", "No Protection",
+      set_hsi_button_view_contain(self, "dialog-warning-symbolic",
+                                  "icon_error",
+                                  "No Protection",
                                   "Exposed to seriours security threats.");
       break;
     case 1:
-      set_hsi_button_view_contain(self, "security-low-symbolic", "Minimum Protection",
+      set_hsi_button_view_contain(self, "security-low-symbolic",
+                                  "icon_neutral",
+                                  "Minimum Protection",
                                   "Limited protection against simple security threats.");
       break;
     case 2:
-      set_hsi_button_view_contain(self, "security-medium-symbolic", "Basic Protection",
+      set_hsi_button_view_contain(self, "security-medium-symbolic",
+                                  "icon_warning",
+                                  "Basic Protection",
                                   "Protected against common security threats.");
       break;
     case 3:
-      set_hsi_button_view_contain(self, "security-high-symbolic", "Extended Protection",
+      set_hsi_button_view_contain(self, "security-high-symbolic",
+                                  "icon_good",
+                                  "Extended Protection",
                                   "Protected against a wide range of security threats.");
       break;
     case 4:
-      set_hsi_button_view_contain(self, "security-high-symbolic", "Comprehensive Protection",
+      set_hsi_button_view_contain(self, "security-high-symbolic",
+                                  "icon_good",
+                                  "Comprehensive Protection",
                                   "Protected against a wide range security threats.");
       break;
     default:
@@ -588,7 +602,8 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
 
   object_class->finalize = cc_firmware_security_panel_finalize;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/control-center/firmware-security/cc-firmware-security-panel.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, 
+                    "/org/gnome/control-center/firmware-security/cc-firmware-security-panel.ui");
 
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_button);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_icon);
@@ -600,7 +615,8 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_label);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_description);
 
-  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_listbox);
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel,
+                                        firmware_security_log_listbox);
 
 
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_click);
@@ -619,18 +635,14 @@ cc_firmware_security_panel_init (CcfirmwareSecurityPanel *self)
                                                          g_str_equal,
                                                          g_free,
                                                          g_free);
-  self->hsi1_hash_table = g_hash_table_new (g_str_hash,
-                                            g_str_equal);
-  self->hsi2_hash_table = g_hash_table_new (g_str_hash,
-                                            g_str_equal);
-  self->hsi3_hash_table = g_hash_table_new (g_str_hash,
-                                            g_str_equal);
-  self->hsi4_hash_table = g_hash_table_new (g_str_hash,
-                                            g_str_equal);
-  self->hsi_general_hash_table = g_hash_table_new (g_str_hash,
-                                                   g_str_equal);
-  self->event_hash_table = g_hash_table_new (g_str_hash,
-                                             g_str_equal);
+  self->hsi1_hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+  self->hsi2_hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+  self->hsi3_hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+  self->hsi4_hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+  self->hsi_general_hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+  self->event_hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+
+  load_custom_css ("/org/gnome/control-center/firmware-security/security-level.css");
 
   g_dbus_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,  
                             G_DBUS_PROXY_FLAGS_NONE,

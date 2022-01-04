@@ -1,0 +1,32 @@
+
+#icon_good {
+  color: #33d17a;
+  background-color: #d2f4e3;
+  border-radius: 50%;
+}
+
+#icon_error {
+  color: #e01b24;
+  background-color: #f7cdd1;
+  border-radius: 50%;
+}
+
+#icon_warning {
+  color: #e01b24;
+  background-color: #f7cdd1;
+  border-radius: 50%;
+}
+
+#icon_nutural {
+  color: #828282;
+  background-color: #e2e2e4;
+  border-radius: 50%;
+}
+
+#color_green {
+  color: #2ba46d;
+}
+
+#color_dim {
+  color: #afafaf;
+}

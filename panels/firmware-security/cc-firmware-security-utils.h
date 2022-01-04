@@ -328,3 +328,5 @@ const gchar *
 fwupd_security_attr_flag_to_string(FwupdSecurityAttrFlags flag);
 const gchar *
 fwupd_security_attr_result_to_string(FwupdSecurityAttrResult result);
+void
+load_custom_css (const char *path);

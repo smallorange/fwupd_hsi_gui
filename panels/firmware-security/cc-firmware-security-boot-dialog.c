@@ -34,6 +34,7 @@
 struct _CcFirmwareSecurityBootDialog {
   GtkDialog            parent;
 
+  GtkWidget            *secure_boot_icon;
   GtkWidget            *secure_boot_title;
   GtkWidget            *secure_boot_body;
 
@@ -56,11 +57,15 @@ static void
 update_dialog(CcFirmwareSecurityBootDialog *self)
 {
   if(self->is_secure_boot == TRUE)
+  {
     update_dialog_items(self, _("Secure Boot is Active"),
                         _("Secure boot active description"));
-  else
+    gtk_widget_set_name(self->secure_boot_icon, "icon_good");
+  } else {
     update_dialog_items(self, _("Secure Boot is Inactive"),
                         _("Secure boot inactive description"));
+    gtk_widget_set_name(self->secure_boot_icon, "icon_error");
+  }
 }
 
 static void
@@ -82,12 +87,14 @@ cc_firmware_security_boot_dialog_class_init (CcFirmwareSecurityBootDialogClass *
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/control-center/firmware-security/cc-firmware-security-boot-dialog.ui");
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_title);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_body);
+  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_icon);
 }
 
 static void
 cc_firmware_security_boot_dialog_init (CcFirmwareSecurityBootDialog *dialog)
 {
   gtk_widget_init_template (GTK_WIDGET (dialog));
+  load_custom_css ("/org/gnome/control-center/firmware-security/security-level.css");
 }
 
 CcFirmwareSecurityBootDialog *

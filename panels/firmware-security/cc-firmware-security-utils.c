@@ -256,3 +256,16 @@ fwupd_security_attr_result_to_string(FwupdSecurityAttrResult result)
 		return _("not-supported");
 	return NULL;
 }
+
+void
+load_custom_css (const char *path)
+{
+  g_autoptr(GtkCssProvider) provider = NULL;
+
+  /* use custom CSS */
+  provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_resource (provider, path);
+  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+                                             GTK_STYLE_PROVIDER (provider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_USER);
+}
