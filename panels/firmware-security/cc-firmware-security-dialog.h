@@ -31,10 +31,10 @@ G_DECLARE_FINAL_TYPE (CcFirmwareSecurityDialog, cc_firmware_security_dialog, CC,
 CcFirmwareSecurityDialog *
 cc_firmware_security_dialog_new (const gchar      *title,
                                  const gint       hsi_number,
-                                 const GHashTable *attr_hash,
-																 const GHashTable *hsi1_hash_table,
-  															 const GHashTable *hsi2_hash_table,
-  															 const GHashTable *hsi3_hash_table,
-  															 const GHashTable *hsi4_hash_table);
+                                 GHashTable *attr_hash,
+																 GHashTable *hsi1_hash_table,
+  															 GHashTable *hsi2_hash_table,
+  															 GHashTable *hsi3_hash_table,
+  															 GHashTable *hsi4_hash_table);
 
 G_END_DECLS

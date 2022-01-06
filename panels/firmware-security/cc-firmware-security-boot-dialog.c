@@ -28,8 +28,7 @@
 
 #include "cc-firmware-security-panel.h"
 #include "cc-firmware-security-boot-dialog.h"
-
-
+#include "cc-firmware-security-utils.h"
 
 struct _CcFirmwareSecurityBootDialog {
   GtkDialog            parent;
@@ -49,8 +48,8 @@ static void
 update_dialog_items(CcFirmwareSecurityBootDialog *self,
                     const gchar *title, const gchar *body)
 {
-  gtk_label_set_text(self->secure_boot_title, title);
-  gtk_label_set_text(self->secure_boot_body, body);
+  gtk_label_set_text(GTK_LABEL(self->secure_boot_title), title);
+  gtk_label_set_text(GTK_LABEL(self->secure_boot_body), body);
 }
 
 static void
@@ -71,8 +70,6 @@ update_dialog(CcFirmwareSecurityBootDialog *self)
 static void
 cc_firmware_security_boot_dialog_finalize (GObject *object)
 {
-  CcFirmwareSecurityBootDialog *dialog = CC_FIRMWARE_SECURITY_BOOT_DIALOG (object);
-
   G_OBJECT_CLASS (cc_firmware_security_boot_dialog_parent_class)->dispose (object);
 }
 
@@ -84,7 +81,8 @@ cc_firmware_security_boot_dialog_class_init (CcFirmwareSecurityBootDialogClass *
 
   object_class->dispose = cc_firmware_security_boot_dialog_finalize;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/control-center/firmware-security/cc-firmware-security-boot-dialog.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, 
+                "/org/gnome/control-center/firmware-security/cc-firmware-security-boot-dialog.ui");
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_title);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_body);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_icon);

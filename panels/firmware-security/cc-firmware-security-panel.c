@@ -29,10 +29,6 @@
 #include <gio/gdesktopappinfo.h>
 #include <glib/gi18n.h>
 
-#define LOCATION_ENABLED "enabled"
-#define APP_PERMISSIONS_TABLE "location"
-#define APP_PERMISSIONS_ID "location"
-
 struct _CcfirmwareSecurityPanel
 {
   CcPanel       parent_instance;
@@ -91,17 +87,17 @@ set_secure_boot_button_view(CcfirmwareSecurityPanel *self)
   switch(flags % 2)
   {
     case 1:
-              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-high-symbolic", 50);
-              gtk_label_set_text(self->secure_boot_label, _("Secure Boot is Active"));
-              gtk_label_set_text(self->secure_boot_description, _("Secure boot active description"));
+              gtk_image_set_from_icon_name(GTK_IMAGE(self->secure_boot_icon), "security-high-symbolic", 50);
+              gtk_label_set_text(GTK_LABEL(self->secure_boot_label), _("Secure Boot is Active"));
+              gtk_label_set_text(GTK_LABEL(self->secure_boot_description), _("Secure boot active description"));
               gtk_widget_set_name(self->secure_boot_icon, "icon_good");
               self->is_secure_boot = TRUE;
               break;
     case 2:
     default:
-              gtk_image_set_from_icon_name(self->secure_boot_icon, "security-low-symbolic", 50);
-              gtk_label_set_text(self->secure_boot_label, _("Secure Boot is Inactive"));
-              gtk_label_set_text(self->secure_boot_description, _("Secure boot inactive description"));
+              gtk_image_set_from_icon_name(GTK_IMAGE(self->secure_boot_icon), "security-low-symbolic", 50);
+              gtk_label_set_text(GTK_LABEL(self->secure_boot_label), _("Secure Boot is Inactive"));
+              gtk_label_set_text(GTK_LABEL(self->secure_boot_description), _("Secure boot inactive description"));
               gtk_widget_set_name(self->secure_boot_icon, "icon_error");
               self->is_secure_boot = FALSE;
   }
@@ -129,14 +125,13 @@ static GtkWidget*
 event_build_listbox_row(CcfirmwareSecurityPanel *self, const gchar *app_name, const gchar *results, const gchar *date_string)
 {
   GtkWidget *box;
-  GtkWidget *label_box;
   GtkWidget *row;
   GtkWidget *date_label;
   GtkWidget *app_name_label;
   GtkWidget *change_label;
 
   row = gtk_list_box_row_new ();
-  box = gtk_hbox_new(FALSE, 0);
+  box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
   g_object_set (box, "margin-start", 1, "margin-end", 1, NULL);
   gtk_container_add (GTK_CONTAINER (row), box);
   date_label = gtk_label_new(date_string);
@@ -146,21 +141,21 @@ event_build_listbox_row(CcfirmwareSecurityPanel *self, const gchar *app_name, co
   gtk_widget_set_margin_top(box, 5);
   gtk_widget_set_margin_bottom(box, 5);
 
-  gtk_box_set_homogeneous(box, FALSE);
-  gtk_box_set_baseline_position(box, GTK_BASELINE_POSITION_CENTER);
-  gtk_box_set_spacing(box, 1);
+  gtk_box_set_homogeneous(GTK_BOX(box), FALSE);
+  gtk_box_set_baseline_position(GTK_BOX(box), GTK_BASELINE_POSITION_CENTER);
+  gtk_box_set_spacing(GTK_BOX(box), 1);
   gtk_widget_set_halign(box, GTK_ALIGN_START);
 
-  gtk_label_set_xalign(app_name_label, 0.0);
-  gtk_label_set_yalign(app_name_label, 0.0);
-  gtk_label_set_width_chars(app_name_label, 20);
-  gtk_label_set_ellipsize (app_name_label, PANGO_ELLIPSIZE_END);
-  gtk_label_set_max_width_chars (app_name_label, 16);
+  gtk_label_set_xalign(GTK_LABEL(app_name_label), 0.0);
+  gtk_label_set_yalign(GTK_LABEL(app_name_label), 0.0);
+  gtk_label_set_width_chars(GTK_LABEL(app_name_label), 20);
+  gtk_label_set_ellipsize (GTK_LABEL(app_name_label), PANGO_ELLIPSIZE_END);
+  gtk_label_set_max_width_chars (GTK_LABEL(app_name_label), 16);
 
 
-  gtk_box_pack_start(box, date_label, TRUE, FALSE, 10);
-  gtk_box_pack_start(box, app_name_label, TRUE, FALSE, 10);
-  gtk_box_pack_start(box, change_label, TRUE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(box), date_label, TRUE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(box), app_name_label, TRUE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(box), change_label, TRUE, FALSE, 10);
 
   return row;
 }
@@ -171,22 +166,24 @@ event_build_string(CcfirmwareSecurityPanel *self, const gchar *app_name,
                    const guint64 results, const guint64 timestamp)
 {
   GtkWidget *row;
-  struct GDatetime *date = g_date_time_new_from_unix_local(timestamp);
+  GDateTime *date;
   g_autofree gchar *date_string;
   gchar change_string[100];
   guint64 *result_origin;
+  date = g_date_time_new_from_unix_local(timestamp);
   date_string = g_date_time_format(date, "\%F \%H:\%m:\%S");
   result_origin = g_hash_table_lookup(self->event_hash_table, app_name);
-  g_sprintf(change_string, "Changed from %s to %s", fwupd_security_attr_result_to_string(results),
-            fwupd_security_attr_result_to_string(GPOINTER_TO_INT(result_origin)));
+  g_snprintf(change_string, 100, "Changed from %s to %s",
+             fwupd_security_attr_result_to_string(results),
+             fwupd_security_attr_result_to_string(GPOINTER_TO_INT(result_origin)));
   g_date_time_unref(date);
   row = event_build_listbox_row(self,  fu_security_attr_get_name(app_name), change_string, date_string);
-  gtk_list_box_insert(self->firmware_security_log_listbox, row, -1);
+  gtk_list_box_insert(GTK_LIST_BOX(self->firmware_security_log_listbox), row, -1);
 }
 
 
 static void
-event_on_hit(CcfirmwareSecurityPanel *self, const gchar *app_name, GVariantIter *iter)
+event_on_hit(CcfirmwareSecurityPanel *self, gchar *app_name, GVariantIter *iter)
 {
   GVariant *value;
   const gchar *key;
@@ -213,22 +210,22 @@ parse_event_variant_iter(CcfirmwareSecurityPanel *self, GVariantIter *iter)
 {
   GVariant *value;
   const gchar *key;
-  gchar *app_name = NULL;
-  guint64 flags = 0;
-  guint32 hsi_level = 0;
+  gchar *app_name;
 
   while (g_variant_iter_next(iter, "{&sv}", &key, &value)) {
     if (!g_strcmp0 (key, "AppstreamId")) {
-      app_name = g_variant_get_string (value, NULL);
+      app_name = g_strdup(g_variant_get_string (value, NULL));
       if(g_hash_table_lookup(self->event_hash_table, app_name))
       {
         event_on_hit(self, app_name, iter);
         g_variant_unref(value);
+        g_free(app_name);
         break;
       }else
       {
         event_hash_insert(self, app_name, iter);
         g_variant_unref(value);
+        g_free(app_name);
         break;
       }
     }
@@ -243,13 +240,13 @@ parse_variant_iter(CcfirmwareSecurityPanel *self, GVariantIter *iter)
 {
   GVariant *value;
   const gchar *key;
-  gchar *app_name = NULL;
+  g_autofree gchar *app_name = NULL;
   guint64 flags = 0;
   guint32 hsi_level = 0;
 
 	while (g_variant_iter_next(iter, "{&sv}", &key, &value)) {
       if (!g_strcmp0 (key, "AppstreamId")) {
-        app_name = g_variant_get_string (value, NULL);
+        app_name = g_strdup(g_variant_get_string (value, NULL));
       }else if(!g_strcmp0(key, "Flags"))
       {
         flags = g_variant_get_uint64(value);
@@ -319,11 +316,9 @@ parse_data_from_variant(CcfirmwareSecurityPanel *self, GVariant *value, const gb
 static void
 parse_array_from_variant (CcfirmwareSecurityPanel *self, GVariant *value, const gboolean is_event)
 {
-	GPtrArray *array = NULL;
 	gsize sz;
 	g_autoptr(GVariant) untuple = NULL;
 
-	array = g_ptr_array_new_with_free_func ((GDestroyNotify) g_object_unref);
 	untuple = g_variant_get_child_value (value, 0);
 	sz = g_variant_n_children (untuple);
 	for (guint i = 0; i < sz; i++) {
@@ -387,7 +382,6 @@ on_bus_ready (GObject      *source_object,
   g_autoptr(GError) error = NULL;
   CcfirmwareSecurityPanel *self;
   GDBusProxy *proxy;
-  GVariant *params;
 
   proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
   if (proxy == NULL)
@@ -431,7 +425,7 @@ on_hsi_button_click(GtkWidget *widget, gpointer data)
                                            self->hsi2_hash_table,
                                            self->hsi3_hash_table,
                                            self->hsi4_hash_table);
-  gtk_widget_show(dialog);
+  gtk_widget_show(GTK_WIDGET(dialog));
 }
 
 
@@ -442,7 +436,7 @@ on_secure_boot_button_click(GtkWidget *widget, gpointer data)
   CcfirmwareSecurityPanel  *self = data;
 
   boot_dialog = cc_firmware_security_boot_dialog_new(self->is_secure_boot);
-  gtk_widget_show(boot_dialog);
+  gtk_widget_show(GTK_WIDGET(boot_dialog));
 }
 
 
@@ -451,7 +445,7 @@ static gint hsi_parser(const gchar *hsi_string)
   gchar tmp[2];
   if(!strncasecmp(hsi_string, "HSI", 3))
   {
-    g_sprintf(tmp, "%c", hsi_string[4]);
+    g_snprintf(tmp, 2, "%c", hsi_string[4]);
     return g_ascii_strtoll(tmp, NULL, 10);
   }
   return 0;
@@ -462,10 +456,10 @@ static void
 set_hsi_button_view_contain(CcfirmwareSecurityPanel *self, const gchar *icon_name,
                             const gchar *style, gchar *title, const gchar *description)
 {
-  gtk_image_set_from_icon_name(self->hsi_icon, icon_name, 50);
+  gtk_image_set_from_icon_name(GTK_IMAGE(self->hsi_icon), icon_name, 50);
   gtk_widget_set_name(self->hsi_icon, style);
-  gtk_label_set_text(self->hsi_label, title);
-  gtk_label_set_text(self->hsi_description, description);
+  gtk_label_set_text(GTK_LABEL(self->hsi_label), title);
+  gtk_label_set_text(GTK_LABEL(self->hsi_description), description);
 }
 
 
@@ -515,9 +509,8 @@ on_properties_bus_done  (GObject *source,
                          GAsyncResult *res,
                          gpointer user_data)
 {
-	g_autoptr(GError) error = NULL;
-	g_autoptr(GVariant) val = NULL;
-	gchar* hsi_string = NULL;
+  g_autoptr(GError) error = NULL;
+  g_autoptr(GVariant) val = NULL;
   const gchar *hsi_number = NULL;
   CcfirmwareSecurityPanel *self;
 
@@ -541,7 +534,6 @@ on_properties_bus_ready (GObject      *source_object,
   g_autoptr(GError) error = NULL;
   CcfirmwareSecurityPanel *self;
   GDBusProxy *proxy;
-  GVariant *params;
 
   proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
   if (proxy == NULL)
