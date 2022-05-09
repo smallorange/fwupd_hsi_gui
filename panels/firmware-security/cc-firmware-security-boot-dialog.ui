@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="CcFirmwareSecurityBootDialog" parent="GtkDialog">
-    <property name="can_focus">False</property>
     <property name="modal">True</property>
     <property name="use-header-bar">True</property>
     <property name="valign">start</property>
