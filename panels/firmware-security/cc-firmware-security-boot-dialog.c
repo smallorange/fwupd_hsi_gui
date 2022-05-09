@@ -61,12 +61,22 @@ update_dialog (CcFirmwareSecurityBootDialog *self)
       gtk_widget_set_name (self->secure_boot_icon, "icon_error");
     }
 
-  body = g_strdup_printf ("%s\n\n%s\n\n%s",
-                          /* TRANSLATORS: this is provided by the system firmware */
-                          _("Secure boot provides protection against malicious software that embeds itself in a computer's firmware when it is started. Secure boot prevents this by verifying that firmware has not been tampered with before it is loaded."),
-                          _("Secure boot can often be enabled or disabled from your computer's UEFI firmware settings (BIOS). In some cases, the firmware settings can also be used to resolve configuration issues."),
-                          _("If secure boot is not functional on your device, it is recommended that you contact an IT support provider or your hardware manufacturer."));
-  gtk_label_set_text (GTK_LABEL(self->secure_boot_body), body);
+  gtk_label_set_text (GTK_LABEL (self->secure_boot_body),
+                      /* TRANSLATORS: this is provided by the system firmware */
+                      _("Secure boot provides protection against malicious software that embeds "
+                        "itself in a computer's firmware when it is started. Secure boot prevents "
+                        "this by verifying that firmware has not been tampered with before it is "
+                        "loaded."
+                        "\n"
+                        "\n"
+                        "Secure boot can often be enabled or disabled from your computer's UEFI "
+                        "firmware settings (BIOS). In some cases, the firmware settings can also "
+                        "be used to resolve configuration issues."
+                        "\n"
+                        "\n"
+                        "If secure boot is not functional on your device, it is recommended that "
+                        "you contact an IT support provider or your hardware manufacturer."));
+
 }
 
 static void
@@ -74,8 +84,7 @@ cc_firmware_security_boot_dialog_class_init (CcFirmwareSecurityBootDialogClass *
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gtk_widget_class_set_template_from_resource (widget_class,
-                "/org/gnome/control-center/firmware-security/cc-firmware-security-boot-dialog.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/control-center/firmware-security/cc-firmware-security-boot-dialog.ui");
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_title);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_body);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityBootDialog, secure_boot_icon);
@@ -92,9 +101,7 @@ CcFirmwareSecurityBootDialog *
 cc_firmware_security_boot_dialog_new (SecureBootState secure_boot_state)
 {
   CcFirmwareSecurityBootDialog *dialog;
-  dialog = g_object_new (CC_TYPE_FIRMWARE_SECURITY_BOOT_DIALOG,
-                         "use-header-bar", TRUE,
-                         NULL);
+  dialog = g_object_new (CC_TYPE_FIRMWARE_SECURITY_BOOT_DIALOG, "use-header-bar", TRUE, NULL);
   dialog->secure_boot_state = secure_boot_state;
   update_dialog (dialog);
 

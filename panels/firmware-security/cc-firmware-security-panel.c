@@ -169,8 +169,7 @@ parse_event_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
 
   adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), event_msg);
   adw_action_row_set_subtitle (ADW_ACTION_ROW (row), date_string);
-  adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->firmware_security_log_pgroup),
-                            GTK_WIDGET (row));
+  adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->firmware_security_log_pgroup), GTK_WIDGET (row));
 
   adw_view_stack_set_visible_child_name (ADW_VIEW_STACK (self->firmware_security_log_stack),
                                         "page2");
@@ -325,8 +324,8 @@ on_bus_ready (GObject *source_object, GAsyncResult *res, gpointer user_data)
   if (self->bus_proxy == NULL)
     {
       if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-          g_warning ("failed to connect fwupd: %s",
-                     error->message);
+          g_warning ("failed to connect fwupd: %s", error->message);
+
       return;
     }
   g_dbus_proxy_call (self->bus_proxy,
@@ -458,7 +457,7 @@ on_properties_bus_done (GObject *source, GAsyncResult *res, gpointer user_data)
   /* parse value */
   hsi_str = g_variant_get_data (val);
   if (hsi_str != NULL && g_str_has_prefix (hsi_str, "HSI:"))
-      self->hsi_number = g_ascii_strtoll (hsi_str + 4, NULL, 10);
+    self->hsi_number = g_ascii_strtoll (hsi_str + 4, NULL, 10);
   set_hsi_button_view (self);
 }
 
@@ -472,8 +471,8 @@ on_properties_bus_ready (GObject *source_object, GAsyncResult *res, gpointer use
   if (self->properties_bus_proxy == NULL)
     {
       if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-          g_warning ("failed to connect fwupd: %s",
-                     error->message);
+        g_warning ("failed to connect fwupd: %s", error->message);
+
       return;
     }
 
@@ -514,8 +513,7 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
 
   object_class->finalize = cc_firmware_security_panel_finalize;
 
-  gtk_widget_class_set_template_from_resource (widget_class,
-                                "/org/gnome/control-center/firmware-security/cc-firmware-security-panel.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/control-center/firmware-security/cc-firmware-security-panel.ui");
 
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_button);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_icon);
@@ -527,10 +525,8 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_label);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_description);
 
-  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel,
-                                        firmware_security_log_stack);
-  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel,
-                                        firmware_security_log_pgroup);
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_stack);
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_pgroup);
 
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_click);
   gtk_widget_class_bind_template_callback (widget_class, on_secure_boot_button_click);
