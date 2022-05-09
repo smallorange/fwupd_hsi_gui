@@ -24,40 +24,41 @@
 
 #include "cc-firmware-security-boot-dialog.h"
 
-struct _CcFirmwareSecurityBootDialog {
-  GtkDialog             parent;
+struct _CcFirmwareSecurityBootDialog
+{
+  GtkDialog         parent;
 
-  GtkWidget            *secure_boot_icon;
-  GtkWidget            *secure_boot_title;
-  GtkWidget            *secure_boot_body;
+  GtkWidget        *secure_boot_icon;
+  GtkWidget        *secure_boot_title;
+  GtkWidget        *secure_boot_body;
 
-  SecureBootState       secure_boot_state;
+  SecureBootState   secure_boot_state;
 };
 
 G_DEFINE_TYPE (CcFirmwareSecurityBootDialog, cc_firmware_security_boot_dialog, GTK_TYPE_DIALOG)
 
 static void
-update_dialog(CcFirmwareSecurityBootDialog *self)
+update_dialog (CcFirmwareSecurityBootDialog *self)
 {
   g_autofree gchar *body = NULL;
 
   if (self->secure_boot_state == SECURE_BOOT_STATE_ACTIVE)
     {
       /* TRANSLATORS: secure boot refers to the system firmware security mode */
-      gtk_label_set_text(GTK_LABEL(self->secure_boot_title), _("Secure Boot is Active"));
-      gtk_widget_set_name(self->secure_boot_icon, "icon_good");
+      gtk_label_set_text (GTK_LABEL(self->secure_boot_title), _("Secure Boot is Active"));
+      gtk_widget_set_name (self->secure_boot_icon, "icon_good");
     }
   else if (self->secure_boot_state == SECURE_BOOT_STATE_PROBLEMS)
     {
       /* TRANSLATORS: secure boot refers to the system firmware security mode */
-      gtk_label_set_text(GTK_LABEL(self->secure_boot_title), _("Secure Boot has Problems"));
-      gtk_widget_set_name(self->secure_boot_icon, "icon_error");
+      gtk_label_set_text (GTK_LABEL (self->secure_boot_title), _("Secure Boot has Problems"));
+      gtk_widget_set_name (self->secure_boot_icon, "icon_error");
     }
   else
     {
       /* TRANSLATORS: secure boot refers to the system firmware security mode */
-      gtk_label_set_text(GTK_LABEL(self->secure_boot_title), _("Secure Boot is Inactive"));
-      gtk_widget_set_name(self->secure_boot_icon, "icon_error");
+      gtk_label_set_text (GTK_LABEL (self->secure_boot_title), _("Secure Boot is Inactive"));
+      gtk_widget_set_name (self->secure_boot_icon, "icon_error");
     }
 
   body = g_strdup_printf ("%s\n\n%s\n\n%s",
@@ -65,7 +66,7 @@ update_dialog(CcFirmwareSecurityBootDialog *self)
                           _("Secure boot provides protection against malicious software that embeds itself in a computer's firmware when it is started. Secure boot prevents this by verifying that firmware has not been tampered with before it is loaded."),
                           _("Secure boot can often be enabled or disabled from your computer's UEFI firmware settings (BIOS). In some cases, the firmware settings can also be used to resolve configuration issues."),
                           _("If secure boot is not functional on your device, it is recommended that you contact an IT support provider or your hardware manufacturer."));
-  gtk_label_set_text(GTK_LABEL(self->secure_boot_body), body);
+  gtk_label_set_text (GTK_LABEL(self->secure_boot_body), body);
 }
 
 static void
@@ -104,7 +105,7 @@ cc_firmware_security_boot_dialog_new (SecureBootState secure_boot_state)
                          "use-header-bar", TRUE,
                          NULL);
   dialog->secure_boot_state = secure_boot_state;
-  update_dialog(dialog);
+  update_dialog (dialog);
 
   return dialog;
 }
