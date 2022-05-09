@@ -46,19 +46,19 @@ update_dialog (CcFirmwareSecurityBootDialog *self)
     {
       /* TRANSLATORS: secure boot refers to the system firmware security mode */
       gtk_label_set_text (GTK_LABEL(self->secure_boot_title), _("Secure Boot is Active"));
-      gtk_widget_set_name (self->secure_boot_icon, "icon_good");
+      gtk_widget_add_css_class (self->secure_boot_icon, "icon_good");
     }
   else if (self->secure_boot_state == SECURE_BOOT_STATE_PROBLEMS)
     {
       /* TRANSLATORS: secure boot refers to the system firmware security mode */
       gtk_label_set_text (GTK_LABEL (self->secure_boot_title), _("Secure Boot has Problems"));
-      gtk_widget_set_name (self->secure_boot_icon, "icon_error");
+      gtk_widget_add_css_class (self->secure_boot_icon, "icon_error");
     }
   else
     {
       /* TRANSLATORS: secure boot refers to the system firmware security mode */
       gtk_label_set_text (GTK_LABEL (self->secure_boot_title), _("Secure Boot is Inactive"));
-      gtk_widget_set_name (self->secure_boot_icon, "icon_error");
+      gtk_widget_add_css_class (self->secure_boot_icon, "icon_error");
     }
 
   gtk_label_set_text (GTK_LABEL (self->secure_boot_body),

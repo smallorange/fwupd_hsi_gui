@@ -70,7 +70,7 @@ set_dialog_item_layer1 (CcFirmwareSecurityDialog *self, const gchar *icon_name,
   /* TRANSLATORS: HSI stands for Host Security ID and device refers to the computer as a whole */
   str = g_strdup_printf (_("Device conforms to HSI level %d"), self->hsi_number);
   gtk_image_set_from_icon_name (GTK_IMAGE (self->firmware_security_dialog_icon), icon_name);
-  gtk_widget_set_name (self->firmware_security_dialog_icon, style);
+  gtk_widget_add_css_class (self->firmware_security_dialog_icon, style);
   gtk_label_set_text (GTK_LABEL (self->firmware_security_dialog_title_label), title);
   gtk_label_set_text (GTK_LABEL (self->firmware_security_dialog_body_label), body);
   gtk_label_set_text (GTK_LABEL (self->firmware_security_dialog_hsi_label), str);

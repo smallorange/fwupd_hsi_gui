@@ -32,9 +32,7 @@
             <property name="spacing">16</property>
             <child>
               <object class="GtkImage" id="secure_boot_icon">
-                <property name="pixel-size">30</property>
-                <property name="width-request">60</property>
-                <property name="height-request">60</property>
+                <property name="pixel-size">32</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="icon-name">system-reboot-symbolic</property>
@@ -53,8 +51,8 @@
               <object class="GtkLabel" id="secure_boot_body">
                 <property name="label"/>
                 <property name="wrap">True</property>
-                <property name="width-chars">30</property>
-                <property name="max-width-chars">30</property>
+                <property name="width-chars">32</property>
+                <property name="max-width-chars">32</property>
                 <property name="justify">left</property>
               </object>
             </child>

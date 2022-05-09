@@ -1,25 +1,33 @@
-#icon_good {
+.icon_good {
   color: @success_color;
   background-color: alpha(@success_color, .25);
   border-radius: 50%;
+  min-width: 60px;
+  min-height: 60px;
 }
 
-#icon_error {
+.icon_error {
   color: @error_color;
   background-color: alpha(@error_color, .25);
   border-radius: 50%;
+  min-width: 60px;
+  min-height: 60px;
 }
 
-#icon_warning {
+.icon_warning {
   color: @warning_color;
   background-color: alpha(@warning_color, .25);
   border-radius: 50%;
+  min-width: 60px;
+  min-height: 60px;
 }
 
-#icon_neutral {
+.icon_neutral {
   color: #828282;
   background-color: alpha(#828282, .25);
   border-radius: 50%;
+  min-width: 60px;
+  min-height: 60px;
 }
 
 #color_green {

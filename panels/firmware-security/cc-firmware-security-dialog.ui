@@ -48,9 +48,7 @@
                         <property name="margin-start">16</property>
                         <property name="margin-end">16</property>
                         <property name="margin-top">16</property>
-                        <property name="pixel-size">30</property>
-                        <property name="width-request">60</property>
-                        <property name="height-request">60</property>
+                        <property name="pixel-size">32</property>
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="icon-name">security-high-symbolic</property>
@@ -92,7 +90,6 @@
                         <signal name="activated" handler="on_hsi_click" swapped="no" />
                         <child>
                           <object class="GtkImage">
-                            <property name="pixel-size">20</property>
                             <property name="icon-name">go-next-symbolic</property>
                             <property name="css-name">next_image</property>
                           </object>
@@ -109,7 +106,6 @@
                         <signal name="activated" handler="on_hsi_click" swapped="no" />
                         <child>
                           <object class="GtkImage">
-                            <property name="pixel-size">20</property>
                             <property name="icon-name">go-next-symbolic</property>
                             <property name="css-name">next_image</property>
                           </object>
@@ -126,7 +122,6 @@
                         <property name="icon-name">emblem-default-symbolic</property>
                         <child>
                           <object class="GtkImage">
-                            <property name="pixel-size">20</property>
                             <property name="icon-name">go-next-symbolic</property>
                             <property name="css-name">next_image</property>
                           </object>

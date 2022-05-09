@@ -102,19 +102,19 @@ set_secure_boot_button_view (CcfirmwareSecurityPanel *self)
    {
       gtk_label_set_text (GTK_LABEL(self->secure_boot_label), _("Secure Boot is Active"));
       gtk_label_set_text (GTK_LABEL(self->secure_boot_description), _("Protected against malicious software when the device starts."));
-      gtk_widget_set_name (self->secure_boot_icon, "icon_good");
+      gtk_widget_add_css_class (self->secure_boot_icon, "icon_good");
     }
   else if (self->secure_boot_state == SECURE_BOOT_STATE_PROBLEMS)
    {
       gtk_label_set_text (GTK_LABEL(self->secure_boot_label), _("Secure Boot has Problems"));
       gtk_label_set_text (GTK_LABEL(self->secure_boot_description), _("Some protection when the device is started."));
-      gtk_widget_set_name (self->secure_boot_icon, "icon_error");
+      gtk_widget_add_css_class (self->secure_boot_icon, "icon_error");
     }
   else
     {
       gtk_label_set_text (GTK_LABEL (self->secure_boot_label), _("Secure Boot is Inactive"));
       gtk_label_set_text (GTK_LABEL (self->secure_boot_description), _("No protection when the device is started."));
-      gtk_widget_set_name (self->secure_boot_icon, "icon_error");
+      gtk_widget_add_css_class (self->secure_boot_icon, "icon_error");
     }
 }
 
@@ -171,8 +171,7 @@ parse_event_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
   adw_action_row_set_subtitle (ADW_ACTION_ROW (row), date_string);
   adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->firmware_security_log_pgroup), GTK_WIDGET (row));
 
-  adw_view_stack_set_visible_child_name (ADW_VIEW_STACK (self->firmware_security_log_stack),
-                                        "page2");
+  adw_view_stack_set_visible_child_name (ADW_VIEW_STACK (self->firmware_security_log_stack), "page2");
 }
 
 static void
@@ -389,7 +388,7 @@ set_hsi_button_view_contain(CcfirmwareSecurityPanel *self,
                             const gchar *description)
 {
   gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), icon_name);
-  gtk_widget_set_name (self->hsi_icon, style);
+  gtk_widget_add_css_class (self->hsi_icon, style);
   gtk_label_set_text (GTK_LABEL (self->hsi_label), title);
   gtk_label_set_text (GTK_LABEL (self->hsi_description), description);
 }

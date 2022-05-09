@@ -31,8 +31,6 @@
                           <object class="GtkImage" id="hsi_icon">
                             <property name="halign">center</property>
                             <property name="valign">center</property>
-                            <property name="height-request">64</property>
-                            <property name="width-request">64</property>
                             <property name="icon-name">security-low-symbolic</property>
                             <property name="pixel-size">32</property>
                             <property name="margin-bottom">6</property>
@@ -86,8 +84,6 @@
                             <property name="pixel-size">32</property>
                             <property name="halign">center</property>
                             <property name="valign">center</property>
-                            <property name="height-request">64</property>
-                            <property name="width-request">64</property>
                             <property name="icon-name">system-reboot-symbolic</property>
                             <property name="margin-bottom">6</property>
                           </object>
