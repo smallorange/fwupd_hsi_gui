@@ -70,18 +70,9 @@ update_dialog (CcFirmwareSecurityBootDialog *self)
 }
 
 static void
-cc_firmware_security_boot_dialog_finalize (GObject *object)
-{
-  G_OBJECT_CLASS (cc_firmware_security_boot_dialog_parent_class)->dispose (object);
-}
-
-static void
 cc_firmware_security_boot_dialog_class_init (CcFirmwareSecurityBootDialogClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  object_class->dispose = cc_firmware_security_boot_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
                 "/org/gnome/control-center/firmware-security/cc-firmware-security-boot-dialog.ui");
