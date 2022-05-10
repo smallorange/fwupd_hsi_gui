@@ -270,7 +270,7 @@ cc_firmware_security_dialog_init (CcFirmwareSecurityDialog *dialog)
   load_custom_css ("/org/gnome/control-center/firmware-security/security-level.css");
 }
 
-CcFirmwareSecurityDialog *
+GtkWidget *
 cc_firmware_security_dialog_new (guint       hsi_number,
                                  GHashTable *hsi1_dict,
                                  GHashTable *hsi2_dict,
@@ -290,5 +290,5 @@ cc_firmware_security_dialog_new (guint       hsi_number,
   dialog->hsi4_dict = hsi4_dict;
   update_dialog(dialog);
 
-  return dialog;
+  return GTK_WIDGET (dialog);
 }

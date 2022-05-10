@@ -28,11 +28,10 @@ G_BEGIN_DECLS
 #define CC_TYPE_FIRMWARE_SECURITY_DIALOG (cc_firmware_security_dialog_get_type ())
 G_DECLARE_FINAL_TYPE (CcFirmwareSecurityDialog, cc_firmware_security_dialog, CC, FIRMWARE_SECURITY_DIALOG, GtkDialog)
 
-CcFirmwareSecurityDialog *
-cc_firmware_security_dialog_new (guint       hsi_number,
-                                 GHashTable *hsi1_dict,
-                                 GHashTable *hsi2_dict,
-                                 GHashTable *hsi3_dict,
-                                 GHashTable *hsi4_dict);
+GtkWidget * cc_firmware_security_dialog_new (guint       hsi_number,
+                                             GHashTable *hsi1_dict,
+                                             GHashTable *hsi2_dict,
+                                             GHashTable *hsi3_dict,
+                                             GHashTable *hsi4_dict);
 
 G_END_DECLS

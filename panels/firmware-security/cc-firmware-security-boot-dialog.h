@@ -30,6 +30,6 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CcFirmwareSecurityBootDialog, cc_firmware_security_boot_dialog,
                       CC, FIRMWARE_SECURITY_BOOT_DIALOG, GtkDialog)
 
-CcFirmwareSecurityBootDialog *cc_firmware_security_boot_dialog_new (SecureBootState secure_boot_state);
+GtkWidget *cc_firmware_security_boot_dialog_new (SecureBootState secure_boot_state);
 
 G_END_DECLS

@@ -97,13 +97,16 @@ cc_firmware_security_boot_dialog_init (CcFirmwareSecurityBootDialog *dialog)
   load_custom_css ("/org/gnome/control-center/firmware-security/security-level.css");
 }
 
-CcFirmwareSecurityBootDialog *
+GtkWidget *
 cc_firmware_security_boot_dialog_new (SecureBootState secure_boot_state)
 {
   CcFirmwareSecurityBootDialog *dialog;
-  dialog = g_object_new (CC_TYPE_FIRMWARE_SECURITY_BOOT_DIALOG, "use-header-bar", TRUE, NULL);
+  dialog = g_object_new (CC_TYPE_FIRMWARE_SECURITY_BOOT_DIALOG,
+                         "use-header-bar",
+                         TRUE,
+                         NULL);
   dialog->secure_boot_state = secure_boot_state;
   update_dialog (dialog);
 
-  return dialog;
+  return GTK_WIDGET (dialog);
 }

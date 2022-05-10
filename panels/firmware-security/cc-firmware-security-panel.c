@@ -347,7 +347,7 @@ on_hsi_button_click (GtkWidget *widget, gpointer data)
 {
   GtkWidget *toplevel;
   CcShell *shell;
-  CcFirmwareSecurityDialog *dialog;
+  GtkWidget *dialog;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (data);
 
   dialog = cc_firmware_security_dialog_new (self->hsi_number,
