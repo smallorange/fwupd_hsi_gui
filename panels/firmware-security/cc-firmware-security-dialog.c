@@ -278,7 +278,10 @@ cc_firmware_security_dialog_new (guint       hsi_number,
                                  GHashTable *hsi4_dict)
 {
   CcFirmwareSecurityDialog *dialog;
-  dialog = g_object_new (CC_TYPE_FIRMWARE_SECURITY_DIALOG, "use-header-bar", TRUE, NULL);
+  dialog = g_object_new (CC_TYPE_FIRMWARE_SECURITY_DIALOG,
+                         "use-header-bar",
+                         TRUE,
+                         NULL);
   dialog->hsi_number = hsi_number;
   dialog->is_created = FALSE;
   dialog->hsi1_dict = hsi1_dict;

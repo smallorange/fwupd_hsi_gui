@@ -85,17 +85,11 @@ set_secure_boot_button_view (CcfirmwareSecurityPanel *self)
   /* enabled and valid */
   if ((sb_flags & FWUPD_SECURITY_ATTR_FLAG_SUCCESS) > 0 &&
       (pk_flags & FWUPD_SECURITY_ATTR_FLAG_SUCCESS) > 0)
-    {
-      self->secure_boot_state = SECURE_BOOT_STATE_ACTIVE;
-    }
+    self->secure_boot_state = SECURE_BOOT_STATE_ACTIVE;
   else if ((sb_flags & FWUPD_SECURITY_ATTR_RESULT_ENABLED) > 0)
-    {
-      self->secure_boot_state = SECURE_BOOT_STATE_PROBLEMS;
-    }
+    self->secure_boot_state = SECURE_BOOT_STATE_PROBLEMS;
   else
-    {
-      self->secure_boot_state = SECURE_BOOT_STATE_INACTIVE;
-    }
+    self->secure_boot_state = SECURE_BOOT_STATE_INACTIVE;
 
   /* update UI */
   if (self->secure_boot_state == SECURE_BOOT_STATE_ACTIVE)
@@ -214,23 +208,25 @@ parse_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
       case 2:
         g_hash_table_insert (self->hsi2_dict,
                              g_strdup(appstream_id),
-                             GINT_TO_POINTER(flags));
+                             GINT_TO_POINTER (flags));
         break;
       case 3:
         g_hash_table_insert (self->hsi3_dict,
                              g_strdup(appstream_id),
-                             GINT_TO_POINTER(flags));
+                             GINT_TO_POINTER (flags));
         break;
       case 4:
         g_hash_table_insert (self->hsi4_dict,
                              g_strdup(appstream_id),
-                             GINT_TO_POINTER(flags));
+                             GINT_TO_POINTER (flags));
         break;
     }
 }
 
 static void
-parse_data_from_variant (CcfirmwareSecurityPanel *self, GVariant *value, const gboolean is_event)
+parse_data_from_variant (CcfirmwareSecurityPanel *self,
+                         GVariant *value,
+                         const gboolean is_event)
 {
   const gchar *type_string;
   g_autoptr (GVariantIter) iter = NULL;
@@ -347,12 +343,12 @@ on_bus_ready (GObject *source_object, GAsyncResult *res, gpointer user_data)
 }
 
 static void
-on_hsi_button_click(GtkWidget *widget, gpointer data)
+on_hsi_button_click (GtkWidget *widget, gpointer data)
 {
   GtkWidget *toplevel;
   CcShell *shell;
   CcFirmwareSecurityDialog *dialog;
-  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL(data);
+  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (data);
 
   dialog = cc_firmware_security_dialog_new (self->hsi_number,
                                             self->hsi1_dict,
@@ -370,22 +366,22 @@ on_secure_boot_button_click (GtkWidget *widget, gpointer data)
 {
   GtkWidget *toplevel;
   CcShell *shell;
-  CcFirmwareSecurityBootDialog *boot_dialog;
+  GtkWidget *boot_dialog;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL(data);
 
   boot_dialog = cc_firmware_security_boot_dialog_new (self->secure_boot_state);
   shell = cc_panel_get_shell (CC_PANEL (self));
   toplevel = cc_shell_get_toplevel (shell);
   gtk_window_set_transient_for (GTK_WINDOW (boot_dialog), GTK_WINDOW (toplevel));
-  gtk_widget_show (GTK_WIDGET (boot_dialog));
+  gtk_widget_show (boot_dialog);
 }
 
 static void
-set_hsi_button_view_contain(CcfirmwareSecurityPanel *self,
-                            const gchar *icon_name,
-                            const gchar *style,
-                            gchar *title,
-                            const gchar *description)
+set_hsi_button_view_contain (CcfirmwareSecurityPanel *self,
+                             const gchar *icon_name,
+                             const gchar *style,
+                             gchar *title,
+                             const gchar *description)
 {
   gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), icon_name);
   gtk_widget_add_css_class (self->hsi_icon, style);
