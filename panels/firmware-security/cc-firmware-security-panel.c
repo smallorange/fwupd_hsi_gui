@@ -30,39 +30,39 @@
 
 struct _CcfirmwareSecurityPanel
 {
-  CcPanel       parent_instance;
+  CcPanel           parent_instance;
 
-  GtkButton    *hsi_button;
-  GtkButton    *secure_boot_button;
+  GtkButton        *hsi_button;
+  GtkButton        *secure_boot_button;
 
   /* HSI button */
-  GtkWidget    *hsi_grid;
-  GtkWidget    *hsi_icon;
-  GtkWidget    *hsi_label;
-  GtkWidget    *hsi_description;
+  GtkWidget        *hsi_grid;
+  GtkWidget        *hsi_icon;
+  GtkWidget        *hsi_label;
+  GtkWidget        *hsi_description;
 
   /* secure boot button */
-  GtkWidget    *secure_boot_button_grid;
-  GtkWidget    *secure_boot_icon;
-  GtkWidget    *secure_boot_label;
-  GtkWidget    *secure_boot_description;
+  GtkWidget        *secure_boot_button_grid;
+  GtkWidget        *secure_boot_icon;
+  GtkWidget        *secure_boot_label;
+  GtkWidget        *secure_boot_description;
 
   /* event listbox */
-  GtkWidget    *firmware_security_log_listbox;
-  GtkWidget    *firmware_security_log_stack;
-  GtkWidget    *firmware_security_log_pgroup;
+  GtkWidget        *firmware_security_log_listbox;
+  GtkWidget        *firmware_security_log_stack;
+  GtkWidget        *firmware_security_log_pgroup;
 
-  GDBusProxy   *bus_proxy;
-  GDBusProxy   *properties_bus_proxy;
+  GDBusProxy       *bus_proxy;
+  GDBusProxy       *properties_bus_proxy;
 
-  GHashTable   *hsi0_dict;
-  GHashTable   *hsi1_dict;
-  GHashTable   *hsi2_dict;
-  GHashTable   *hsi3_dict;
-  GHashTable   *hsi4_dict;
+  GHashTable       *hsi0_dict;
+  GHashTable       *hsi1_dict;
+  GHashTable       *hsi2_dict;
+  GHashTable       *hsi3_dict;
+  GHashTable       *hsi4_dict;
 
-  guint         hsi_number;
-  SecureBootState secure_boot_state;
+  guint             hsi_number;
+  SecureBootState   secure_boot_state;
 };
 
 CC_PANEL_REGISTER (CcfirmwareSecurityPanel, cc_firmware_security_panel)
@@ -142,6 +142,7 @@ parse_event_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
   /* unknown to us */
   if (appstream_id == NULL)
     return;
+
   event_msg = fwupd_event_to_log (appstream_id, result);
   if (event_msg == NULL)
     return;
@@ -225,8 +226,8 @@ parse_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
 
 static void
 parse_data_from_variant (CcfirmwareSecurityPanel *self,
-                         GVariant *value,
-                         const gboolean is_event)
+                         GVariant                *value,
+                         const gboolean           is_event)
 {
   const gchar *type_string;
   g_autoptr (GVariantIter) iter = NULL;
@@ -255,7 +256,9 @@ parse_data_from_variant (CcfirmwareSecurityPanel *self,
 }
 
 static void
-parse_array_from_variant (CcfirmwareSecurityPanel *self, GVariant *value, const gboolean is_event)
+parse_array_from_variant (CcfirmwareSecurityPanel *self,
+                          GVariant                *value,
+                          const gboolean           is_event)
 {
   gsize sz;
   g_autoptr(GVariant) untuple = NULL;
@@ -274,7 +277,9 @@ parse_array_from_variant (CcfirmwareSecurityPanel *self, GVariant *value, const 
 }
 
 static void
-on_bus_event_done (GObject *source, GAsyncResult *res, gpointer user_data)
+on_bus_event_done (GObject *source,
+                   GAsyncResult *res,
+                   gpointer user_data)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GVariant) val = NULL;
@@ -291,7 +296,9 @@ on_bus_event_done (GObject *source, GAsyncResult *res, gpointer user_data)
 }
 
 static void
-on_bus_done (GObject *source, GAsyncResult *res, gpointer user_data)
+on_bus_done (GObject      *source,
+             GAsyncResult *res,
+             gpointer      user_data)
 {
   g_autoptr(GError) error = NULL;
   g_autoptr(GVariant) val = NULL;
@@ -310,7 +317,9 @@ on_bus_done (GObject *source, GAsyncResult *res, gpointer user_data)
 }
 
 static void
-on_bus_ready (GObject *source_object, GAsyncResult *res, gpointer user_data)
+on_bus_ready (GObject       *source_object,
+              GAsyncResult  *res,
+              gpointer       user_data)
 {
   g_autoptr(GError) error = NULL;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
@@ -378,10 +387,10 @@ on_secure_boot_button_click (GtkWidget *widget, gpointer data)
 
 static void
 set_hsi_button_view_contain (CcfirmwareSecurityPanel *self,
-                             const gchar *icon_name,
-                             const gchar *style,
-                             gchar *title,
-                             const gchar *description)
+                             const gchar             *icon_name,
+                             const gchar             *style,
+                             gchar                   *title,
+                             const gchar             *description)
 {
   gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), icon_name);
   gtk_widget_add_css_class (self->hsi_icon, style);
@@ -435,7 +444,9 @@ set_hsi_button_view (CcfirmwareSecurityPanel *self)
 }
 
 static void
-on_properties_bus_done (GObject *source, GAsyncResult *res, gpointer user_data)
+on_properties_bus_done (GObject      *source,
+                        GAsyncResult *res,
+                        gpointer      user_data)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GVariant) val = NULL;
@@ -457,7 +468,9 @@ on_properties_bus_done (GObject *source, GAsyncResult *res, gpointer user_data)
 }
 
 static void
-on_properties_bus_ready (GObject *source_object, GAsyncResult *res, gpointer user_data)
+on_properties_bus_ready (GObject      *source_object,
+                         GAsyncResult *res,
+                         gpointer      user_data)
 {
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
   g_autoptr (GError) error = NULL;

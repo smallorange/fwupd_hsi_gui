@@ -26,7 +26,8 @@
 #include "cc-firmware-security-dialog.h"
 #include "cc-firmware-security-utils.h"
 
-struct _CcFirmwareSecurityDialog {
+struct _CcFirmwareSecurityDialog
+{
   GtkDialog            parent;
 
   GtkWidget           *firmware_security_dialog_stack;
@@ -62,8 +63,11 @@ struct _CcFirmwareSecurityDialog {
 G_DEFINE_TYPE (CcFirmwareSecurityDialog, cc_firmware_security_dialog, GTK_TYPE_DIALOG)
 
 static void
-set_dialog_item_layer1 (CcFirmwareSecurityDialog *self, const gchar *icon_name,
-                        const gchar *style, const gchar *title, const gchar *body)
+set_dialog_item_layer1 (CcFirmwareSecurityDialog *self,
+                        const gchar              *icon_name,
+                        const gchar              *style,
+                        const gchar              *title,
+                        const gchar              *body)
 {
   g_autofree gchar *str = NULL;
 
@@ -143,11 +147,13 @@ update_dialog(CcFirmwareSecurityDialog *self)
 }
 
 static GtkWidget *
-hsi_create_pg_row (const gchar *icon_name, const gchar* style, const gchar *item_name)
+hsi_create_pg_row (const gchar *icon_name,
+                   const gchar *style,
+                   const gchar *item_name)
 {
   GtkWidget *row;
 
-  row = adw_action_row_new();
+  row = adw_action_row_new ();
   adw_action_row_set_icon_name (ADW_ACTION_ROW (row), icon_name);
   adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), fu_security_attr_get_name (item_name));
 
@@ -217,7 +223,7 @@ on_hsi_click (GtkWidget *widget, gpointer data)
       self->is_created = TRUE;
     }
 
-  if (g_strcmp0 (gtk_widget_get_name(widget), "firmware_security_min_button") == 0)
+  if (g_strcmp0 (gtk_widget_get_name (widget), "firmware_security_min_button") == 0)
     gtk_widget_set_visible (self->firmware_security_dialog_hsi1_pg, TRUE);
   else if (g_strcmp0(gtk_widget_get_name (widget), "firmware_security_basic_button") == 0)
     gtk_widget_set_visible (self->firmware_security_dialog_hsi2_pg, TRUE);
@@ -288,7 +294,7 @@ cc_firmware_security_dialog_new (guint       hsi_number,
   dialog->hsi2_dict = hsi2_dict;
   dialog->hsi3_dict = hsi3_dict;
   dialog->hsi4_dict = hsi4_dict;
-  update_dialog(dialog);
+  update_dialog (dialog);
 
   return GTK_WIDGET (dialog);
 }
