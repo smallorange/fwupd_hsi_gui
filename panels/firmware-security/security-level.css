@@ -20,8 +20,8 @@
 }
 
 .security-level-icon.neutral {
-  color: #828282;
-  background-color: alpha(#828282, .25);
+  color: @light_4;
+  background-color: alpha(@light_4, .25);
 }
 
 #color_green {
@@ -29,7 +29,7 @@
 }
 
 #color_dim {
-  color: #afafaf;
+  color: @light_4f;
 }
 
 row.success_icon_color image {
@@ -45,5 +45,5 @@ row.error_icon_color image {
 }
 
 row.gray_icon_color image {
-  color: #afafaf;
+  color: @light_4;
 }
