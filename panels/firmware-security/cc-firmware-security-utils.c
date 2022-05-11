@@ -27,181 +27,100 @@
 const gchar *
 fu_security_attr_get_name (const gchar *appstream_id)
 {
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_SPI_BIOSWE) == 0)
-    {
-      /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
-      return g_strdup (_("SPI write"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_SPI_BLE) == 0)
-    {
-      /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
-      return g_strdup (_("SPI lock"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_SPI_SMM_BWP) == 0)
-    {
-      /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
-      return g_strdup (_("SPI BIOS region"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_SPI_DESCRIPTOR) == 0)
-    {
-      /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
-      return g_strdup (_("SPI BIOS Descriptor"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_ACPI_DMAR) == 0)
-    {
-      /* TRANSLATORS: Title: DMA as in https://en.wikipedia.org/wiki/DMA_attack  */
-      return g_strdup (_("Pre-boot DMA protection is"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_ENABLED) == 0)
-    {
-      /* TRANSLATORS: Title: BootGuard is a trademark from Intel */
-      return g_strdup (_("Intel BootGuard"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_VERIFIED) == 0)
-    {
-      /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
-       * verified boot refers to the way the boot process is verified */
-      return g_strdup (_("Intel BootGuard verified boot"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_ACM) == 0)
-    {
-      /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
-       * ACM means to verify the integrity of Initial Boot Block */
-      return g_strdup (_("Intel BootGuard ACM protected"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_POLICY) == 0)
-    {
-      /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
-       * error policy is what to do on failure */
-      return g_strdup (_("Intel BootGuard error policy"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_OTP) == 0)
-    {
-      /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
-       * OTP = one time programmable */
-      return g_strdup (_("Intel BootGuard OTP fuse"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_CET_ENABLED) == 0)
-    {
-      /* TRANSLATORS: Title: CET = Control-flow Enforcement Technology,
-       * enabled means supported by the processor */
-      return g_strdup (_("Intel CET"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_CET_ACTIVE) == 0)
-    {
-      /* TRANSLATORS: Title: CET = Control-flow Enforcement Technology,
-       * active means being used by the OS */
-      return g_strdup (_("Intel CET Active"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_SMAP) == 0)
-    {
-      /* TRANSLATORS: Title: SMAP = Supervisor Mode Access Prevention */
-      return g_strdup (_("Intel SMAP"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_ENCRYPTED_RAM) == 0)
-    {
-      /* TRANSLATORS: Title: Memory contents are encrypted, e.g. Intel TME */
-      return g_strdup (_("Encrypted RAM"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_IOMMU) == 0)
-    {
-      /* TRANSLATORS: Title:
-       * https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit */
-      return g_strdup (_("IOMMU device protection"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_KERNEL_LOCKDOWN) == 0)
-    {
-      /* TRANSLATORS: Title: lockdown is a security mode of the kernel */
-      return g_strdup (_("Kernel lockdown"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_KERNEL_TAINTED) == 0)
-    {
-      /* TRANSLATORS: Title: if it's tainted or not */
-      return g_strdup (_("Kernel tainted"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_KERNEL_SWAP) == 0)
-    {
-      /* TRANSLATORS: Title: swap space or swap partition */
-      return g_strdup (_("Linux swap"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_SUSPEND_TO_RAM) == 0)
-    {
-      /* TRANSLATORS: Title: sleep state */
-      return g_strdup (_("Suspend-to-ram"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_SUSPEND_TO_IDLE) == 0)
-    {
-      /* TRANSLATORS: Title: a better sleep state */
-      return g_strdup (_("Suspend-to-idle"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_UEFI_PK) == 0)
-    {
-      /* TRANSLATORS: Title: PK is the 'platform key' for the machine */
-      return g_strdup (_("UEFI platform key"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_UEFI_SECUREBOOT) == 0)
-    {
-      /* TRANSLATORS: Title: SB is a way of locking down UEFI */
-      return g_strdup (_("Secure boot"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_TPM_EMPTY_PCR) == 0)
-    {
-      /* TRANSLATORS: Title: PCRs (Platform Configuration Registers) shouldn't be empty */
-      return g_strdup (_("All TPM PCRs are"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_TPM_RECONSTRUCTION_PCR0) == 0)
-    {
-      /* TRANSLATORS: Title: the PCR is rebuilt from the TPM event log */
-      return g_strdup (_("TPM PCR0 reconstruction"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_TPM_VERSION_20) == 0)
-    {
-      /* TRANSLATORS: Title: TPM = Trusted Platform Module */
-      return g_strdup (_("TPM v2.0"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_MEI_MANUFACTURING_MODE) == 0)
-    {
-      /* TRANSLATORS: Title: MEI = Intel Management Engine */
-      return g_strdup (_("MEI manufacturing mode"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_MEI_OVERRIDE_STRAP) == 0)
-    {
-      /* TRANSLATORS: Title: MEI = Intel Management Engine, and the
-       * "override" is the physical PIN that can be driven to
-       * logic high -- luckily it is probably not accessible to
-       * end users on consumer boards */
-      return g_strdup (_("MEI override"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_MEI_VERSION) == 0)
-    {
-      /* TRANSLATORS: Title: MEI = Intel Management Engine */
-      return g_strdup (_("MEI version"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_FWUPD_UPDATES) == 0)
-    {
-      /* TRANSLATORS: Title: if firmware updates are available */
-      return g_strdup (_("Firmware updates"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_FWUPD_ATTESTATION) == 0)
-    {
-      /* TRANSLATORS: Title: if we can verify the firmware checksums */
-      return g_strdup (_("Firmware attestation"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_FWUPD_PLUGINS) == 0)
-    {
-      /* TRANSLATORS: Title: if the fwupd plugins are all present and correct */
-      return g_strdup (_("fwupd plugins"));
-    }
-  if (g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_DCI_ENABLED) == 0 ||
-      g_strcmp0 (appstream_id, FWUPD_SECURITY_ATTR_ID_INTEL_DCI_LOCKED) == 0)
-    {
-      /* TRANSLATORS: Title: Direct Connect Interface (DCI) allows
-       * debugging of Intel processors using the USB3 port */
-      return g_strdup (_("Intel DCI debugger"));
-    }
+  struct
+  {
+    const gchar *id;
+    const gchar *name;
+  } attr_to_name[] = {
+    /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
+    { FWUPD_SECURITY_ATTR_ID_SPI_BIOSWE, N_("SPI write"), },
+    /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
+    { FWUPD_SECURITY_ATTR_ID_SPI_BLE, N_("SPI lock"), },
+    /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
+    { FWUPD_SECURITY_ATTR_ID_SPI_SMM_BWP, N_("SPI BIOS region"), },
+    /* TRANSLATORS: Title: SPI refers to the flash chip in the computer */
+    { FWUPD_SECURITY_ATTR_ID_SPI_DESCRIPTOR, N_("SPI BIOS Descriptor"), },
+    /* TRANSLATORS: Title: DMA as in https://en.wikipedia.org/wiki/DMA_attack  */
+    { FWUPD_SECURITY_ATTR_ID_ACPI_DMAR, N_("Pre-boot DMA protection is"), },
+    /* TRANSLATORS: Title: BootGuard is a trademark from Intel */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_ENABLED, N_("Intel BootGuard"), },
+    /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
+     * verified boot refers to the way the boot process is verified */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_VERIFIED, N_("Intel BootGuard verified boot"), },
+    /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
+     * ACM means to verify the integrity of Initial Boot Block */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_ACM, N_("Intel BootGuard ACM protected"), },
+    /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
+     * error policy is what to do on failure */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_POLICY, N_("Intel BootGuard error policy"), },
+    /* TRANSLATORS: Title: BootGuard is a trademark from Intel,
+     * OTP = one time programmable */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_BOOTGUARD_OTP, N_("Intel BootGuard OTP fuse"), },
+    /* TRANSLATORS: Title: CET = Control-flow Enforcement Technology,
+     * enabled means supported by the processor */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_CET_ENABLED, N_("Intel CET"), },
+    /* TRANSLATORS: Title: CET = Control-flow Enforcement Technology,
+     * active means being used by the OS */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_CET_ACTIVE, N_("Intel CET Active"), },
+    /* TRANSLATORS: Title: SMAP = Supervisor Mode Access Prevention */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_SMAP, N_("Intel SMAP"), },
+    /* TRANSLATORS: Title: Memory contents are encrypted, e.g. Intel TME */
+    { FWUPD_SECURITY_ATTR_ID_ENCRYPTED_RAM, N_("Encrypted RAM"), },
+    /* TRANSLATORS: Title:
+     * https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit */
+    { FWUPD_SECURITY_ATTR_ID_IOMMU, N_("IOMMU device protection"), },
+    /* TRANSLATORS: Title: lockdown is a security mode of the kernel */
+    { FWUPD_SECURITY_ATTR_ID_KERNEL_LOCKDOWN, N_("Kernel lockdown"), },
+    /* TRANSLATORS: Title: if it's tainted or not */
+    { FWUPD_SECURITY_ATTR_ID_KERNEL_TAINTED, N_("Kernel tainted"), },
+    /* TRANSLATORS: Title: swap space or swap partition */
+    { FWUPD_SECURITY_ATTR_ID_KERNEL_SWAP, N_("Linux swap"), },
+    /* TRANSLATORS: Title: sleep state */
+    { FWUPD_SECURITY_ATTR_ID_SUSPEND_TO_RAM, N_("Suspend-to-ram"), },
+    /* TRANSLATORS: Title: a better sleep state */
+    { FWUPD_SECURITY_ATTR_ID_SUSPEND_TO_IDLE, N_("Suspend-to-idle"), },
+    /* TRANSLATORS: Title: PK is the 'platform key' for the machine */
+    { FWUPD_SECURITY_ATTR_ID_UEFI_PK, N_("UEFI platform key"), },
+    /* TRANSLATORS: Title: SB is a way of locking down UEFI */
+    { FWUPD_SECURITY_ATTR_ID_UEFI_SECUREBOOT, N_("Secure boot"), },
+    /* TRANSLATORS: Title: PCRs (Platform Configuration Registers) shouldn't be empty */
+    { FWUPD_SECURITY_ATTR_ID_TPM_EMPTY_PCR, N_("All TPM PCRs are"), },
+    /* TRANSLATORS: Title: the PCR is rebuilt from the TPM event log */
+    { FWUPD_SECURITY_ATTR_ID_TPM_RECONSTRUCTION_PCR0, N_("TPM PCR0 reconstruction"), },
+    /* TRANSLATORS: Title: TPM = Trusted Platform Module */
+    { FWUPD_SECURITY_ATTR_ID_TPM_VERSION_20, N_("TPM v2.0"), },
+    /* TRANSLATORS: Title: MEI = Intel Management Engine */
+    { FWUPD_SECURITY_ATTR_ID_MEI_MANUFACTURING_MODE, N_("MEI manufacturing mode"), },
+    /* TRANSLATORS: Title: MEI = Intel Management Engine, and the
+     * "override" is the physical PIN that can be driven to
+     * logic high -- luckily it is probably not accessible to
+     * end users on consumer boards */
+    { FWUPD_SECURITY_ATTR_ID_MEI_OVERRIDE_STRAP, N_("MEI override"), },
+    /* TRANSLATORS: Title: MEI = Intel Management Engine */
+    { FWUPD_SECURITY_ATTR_ID_MEI_VERSION, N_("MEI version"), },
+    /* TRANSLATORS: Title: if firmware updates are available */
+    { FWUPD_SECURITY_ATTR_ID_FWUPD_UPDATES, N_("Firmware updates"), },
+    /* TRANSLATORS: Title: if we can verify the firmware checksums */
+    { FWUPD_SECURITY_ATTR_ID_FWUPD_ATTESTATION, N_("Firmware attestation"), },
+    /* TRANSLATORS: Title: if the fwupd plugins are all present and correct */
+    { FWUPD_SECURITY_ATTR_ID_FWUPD_PLUGINS, N_("fwupd plugins"), },
+    /* TRANSLATORS: Title: Direct Connect Interface (DCI) allows
+     * debugging of Intel processors using the USB3 port */
+    { FWUPD_SECURITY_ATTR_ID_INTEL_DCI_ENABLED, N_("Intel DCI debugger"), },
+    { FWUPD_SECURITY_ATTR_ID_INTEL_DCI_LOCKED, N_("Intel DCI debugger"), },
+    /* TRANSLATORS: Title: DMA as in https://en.wikipedia.org/wiki/DMA_attack  */
+    { FWUPD_SECURITY_ATTR_ID_PREBOOT_DMA_PROTECTION, N_("Pre-boot DMA protection"), },
+    /* TRANSLATORS: Title: if fwupd supports HSI on this chip */
+    { FWUPD_SECURITY_ATTR_ID_SUPPORTED_CPU, N_("Supported CPU"), }
+  };
 
-  /* we should not get here */
-  return g_strdup (appstream_id);
+  for (int i = 0; i < G_N_ELEMENTS (attr_to_name); i++)
+  {
+    if (g_strcmp0 (appstream_id, attr_to_name[i].id) == 0)
+      return _(attr_to_name[i].name);
+  }
+
+  return appstream_id;
 }
 
 gboolean
@@ -218,85 +137,118 @@ fwupd_event_to_log (const char *appstream_id, FwupdSecurityAttrResult result)
     const gchar                 *appstream_id;
     FwupdSecurityAttrResult      result;
     const gchar                 *text;
-  } event_log_items[] = {{"org.fwupd.hsi.Iommu",
-      FWUPD_SECURITY_ATTR_RESULT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("IOMMU device protection enabled")},
-     {"org.fwupd.hsi.Iommu",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_FOUND,
-      /* TRANSLATORS: HSI event title */
-      _("IOMMU device protection disabled")},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.Fwupd.Plugins",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_TAINTED,
-      NULL},
-     {"org.fwupd.hsi.Fwupd.Plugins",
-      FWUPD_SECURITY_ATTR_RESULT_TAINTED,
-      NULL},
-     {"org.fwupd.hsi.Fwupd.Plugins",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
-      NULL},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.Kernel.Tainted",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_TAINTED,
-      /* TRANSLATORS: HSI event title */
-      _("Kernel is no longer tainted")},
-     {"org.fwupd.hsi.Kernel.Tainted",
-      FWUPD_SECURITY_ATTR_RESULT_TAINTED,
-      /* TRANSLATORS: HSI event title */
-      _("Kernel is tainted")},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.Kernel.Lockdown",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("Kernel lockdown disabled")},
-     {"org.fwupd.hsi.Kernel.Lockdown",
-      FWUPD_SECURITY_ATTR_RESULT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("Kernel lockdown enabled")},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.AcpiDmar",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("Pre-boot DMA protection is disabled")},
-     {"org.fwupd.hsi.AcpiDmar",
-      FWUPD_SECURITY_ATTR_RESULT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("Pre-boot DMA protection is enabled")},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.Uefi.SecureBoot",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("Secure Boot disabled")},
-     {"org.fwupd.hsi.Uefi.SecureBoot",
-      FWUPD_SECURITY_ATTR_RESULT_ENABLED,
-      /* TRANSLATORS: HSI event title */
-      _("Secure Boot enabled")},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.Tpm.EmptyPcr",
-      FWUPD_SECURITY_ATTR_RESULT_VALID,
-      /* TRANSLATORS: HSI event title */
-      _("All TPM PCRs are valid")},
-     {"org.fwupd.hsi.Tpm.EmptyPcr",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_VALID,
-      /* TRANSLATORS: HSI event title */
-      _("All TPM PCRs are now valid")},
-     {"org.fwupd.hsi.Uefi.SecureBoot",
-      FWUPD_SECURITY_ATTR_RESULT_VALID,
-      /* TRANSLATORS: HSI event title */
-      _("A TPM PCR is now an invalid value")},
-     /* ------------------------------------------*/
-     {"org.fwupd.hsi.Tpm.ReconstructionPcr0",
-      FWUPD_SECURITY_ATTR_RESULT_NOT_VALID,
-      /* TRANSLATORS: HSI event title */
-      _("TPM PCR0 reconstruction is invalid")},
-     {NULL, 0, NULL}};
+  } event_log_items[] = 
+    {
+      {
+        "org.fwupd.hsi.Iommu",
+        FWUPD_SECURITY_ATTR_RESULT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("IOMMU device protection enabled")
+      },
+      {
+        "org.fwupd.hsi.Iommu",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_FOUND,
+        /* TRANSLATORS: HSI event title */
+        N_("IOMMU device protection disabled")},
+      {
+        "org.fwupd.hsi.Fwupd.Plugins",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_TAINTED,
+        NULL
+      },
+      {
+        "org.fwupd.hsi.Fwupd.Plugins",
+        FWUPD_SECURITY_ATTR_RESULT_TAINTED,
+        NULL
+      },
+      {
+        "org.fwupd.hsi.Fwupd.Plugins",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
+        NULL
+      },
+      {
+        "org.fwupd.hsi.Kernel.Tainted",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_TAINTED,
+        /* TRANSLATORS: HSI event title */
+        N_("Kernel is no longer tainted")
+      },
+      {
+        "org.fwupd.hsi.Kernel.Tainted",
+        FWUPD_SECURITY_ATTR_RESULT_TAINTED,
+        /* TRANSLATORS: HSI event title */
+        N_("Kernel is tainted")
+      },
+      {
+        "org.fwupd.hsi.Kernel.Lockdown",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("Kernel lockdown disabled")
+      },
+      {
+        "org.fwupd.hsi.Kernel.Lockdown",
+        FWUPD_SECURITY_ATTR_RESULT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("Kernel lockdown enabled")
+      },
+      {
+        "org.fwupd.hsi.AcpiDmar",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("Pre-boot DMA protection is disabled")
+      },
+      {
+        "org.fwupd.hsi.AcpiDmar",
+        FWUPD_SECURITY_ATTR_RESULT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("Pre-boot DMA protection is enabled")
+      },
+      {
+        "org.fwupd.hsi.Uefi.SecureBoot",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("Secure Boot disabled")
+      },
+      {
+        "org.fwupd.hsi.Uefi.SecureBoot",
+        FWUPD_SECURITY_ATTR_RESULT_ENABLED,
+        /* TRANSLATORS: HSI event title */
+        N_("Secure Boot enabled")
+      },
+      {
+        "org.fwupd.hsi.Tpm.EmptyPcr",
+        FWUPD_SECURITY_ATTR_RESULT_VALID,
+        /* TRANSLATORS: HSI event title */
+        N_("All TPM PCRs are valid")
+      },
+      {
+        "org.fwupd.hsi.Tpm.EmptyPcr",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_VALID,
+        /* TRANSLATORS: HSI event title */
+        N_("All TPM PCRs are now valid")
+      },
+      {
+        "org.fwupd.hsi.Uefi.SecureBoot",
+        FWUPD_SECURITY_ATTR_RESULT_VALID,
+        /* TRANSLATORS: HSI event title */
+        N_("A TPM PCR is now an invalid value")
+      },
+      {
+        "org.fwupd.hsi.Tpm.ReconstructionPcr0",
+        FWUPD_SECURITY_ATTR_RESULT_NOT_VALID,
+        /* TRANSLATORS: HSI event title */
+        N_("TPM PCR0 reconstruction is invalid")
+      },
+      {
+        NULL,
+        0,
+        NULL
+      }
+    };
 
   for(int i = 0; event_log_items[i].appstream_id != NULL; i++)
     {
       if (g_strcmp0 (appstream_id, event_log_items[i].appstream_id) == 0 &&
                      result == event_log_items[i].result)
-        return g_strdup (event_log_items[i].text);
+        return _(event_log_items[i].text);
     }
   /* when we don't know what the event meant */
   return NULL;

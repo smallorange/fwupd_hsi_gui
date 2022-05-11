@@ -57,6 +57,9 @@ G_BEGIN_DECLS
 #define FWUPD_SECURITY_ATTR_ID_INTEL_DCI_ENABLED "org.fwupd.hsi.IntelDci.Enabled"
 #define FWUPD_SECURITY_ATTR_ID_INTEL_DCI_LOCKED "org.fwupd.hsi.IntelDci.Locked"
 #define FWUPD_SECURITY_ATTR_ID_UEFI_PK "org.fwupd.hsi.Uefi.Pk"
+#define FWUPD_SECURITY_ATTR_ID_PREBOOT_DMA_PROTECTION "org.fwupd.hsi.PrebootDma"
+#define FWUPD_SECURITY_ATTR_ID_SUPPORTED_CPU "org.fwupd.hsi.SupportedCpu"
+
 
 typedef enum {
   SECURE_BOOT_STATE_UNKNOWN,
