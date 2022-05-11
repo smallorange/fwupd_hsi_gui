@@ -52,6 +52,9 @@
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="icon-name">security-high-symbolic</property>
+                        <style>
+                          <class name="security-level-icon"/>
+                        </style>
                       </object>
                     </child>
                   </object>

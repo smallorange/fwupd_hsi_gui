@@ -96,19 +96,19 @@ set_secure_boot_button_view (CcfirmwareSecurityPanel *self)
    {
       gtk_label_set_text (GTK_LABEL(self->secure_boot_label), _("Secure Boot is Active"));
       gtk_label_set_text (GTK_LABEL(self->secure_boot_description), _("Protected against malicious software when the device starts."));
-      gtk_widget_add_css_class (self->secure_boot_icon, "icon_good");
+      gtk_widget_add_css_class (self->secure_boot_icon, "good");
     }
   else if (self->secure_boot_state == SECURE_BOOT_STATE_PROBLEMS)
    {
       gtk_label_set_text (GTK_LABEL(self->secure_boot_label), _("Secure Boot has Problems"));
       gtk_label_set_text (GTK_LABEL(self->secure_boot_description), _("Some protection when the device is started."));
-      gtk_widget_add_css_class (self->secure_boot_icon, "icon_error");
+      gtk_widget_add_css_class (self->secure_boot_icon, "error");
     }
   else
     {
       gtk_label_set_text (GTK_LABEL (self->secure_boot_label), _("Secure Boot is Inactive"));
       gtk_label_set_text (GTK_LABEL (self->secure_boot_description), _("No protection when the device is started."));
-      gtk_widget_add_css_class (self->secure_boot_icon, "icon_error");
+      gtk_widget_add_css_class (self->secure_boot_icon, "error");
     }
 }
 
@@ -405,35 +405,35 @@ set_hsi_button_view (CcfirmwareSecurityPanel *self)
     {
       case 0:
         set_hsi_button_view_contain (self, "dialog-warning-symbolic",
-                                     "icon_error",
+                                     "error",
                                      /* TRANSLATORS: in reference to firmware protection: 0/4 stars */
                                      _("Security Level: No Protection"),
                                      _("Highly exposed to security threats."));
         break;
       case 1:
         set_hsi_button_view_contain (self, "security-low-symbolic",
-                                     "icon_neutral",
+                                     "neutral",
                                      /* TRANSLATORS: in reference to firmware protection: 1/4 stars */
                                      _("Security Leve: Minimum Protection"),
                                      _("Limited protection against simple security threats."));
         break;
       case 2:
         set_hsi_button_view_contain (self, "security-medium-symbolic",
-                                     "icon_warning",
+                                     "warning",
                                      /* TRANSLATORS: in reference to firmware protection: 2/4 stars */
                                      _("Security Level: Basic Protection"),
                                      _("Protected against common security threats."));
         break;
       case 3:
         set_hsi_button_view_contain (self, "security-high-symbolic",
-                                     "icon_good",
+                                     "good",
                                      /* TRANSLATORS: in reference to firmware protection: 3/4 stars */
                                      _("Security Level: Extended Protection"),
                                      _("Protected against a wide range of security threats."));
         break;
       case 4:
         set_hsi_button_view_contain (self, "security-high-symbolic",
-                                     "icon_good",
+                                     "good",
                                      /* TRANSLATORS: in reference to firmware protection: 4/4 stars */
                                      _("Comprehensive Protection"),
                                      _("Protected against a wide range of security threats."));

@@ -95,7 +95,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
       case 0:
         set_dialog_item_layer1 (self,
                                 "dialog-warning-symbolic",
-                                "icon_error",
+                                "error",
                                 _("Security Level: No Protection"),
                                 _("This device has no protection against hardware security issues. This could "
                                   "be because of a hardware or firmware configuration issue. It is "
@@ -107,7 +107,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
         gtk_widget_add_css_class (self->firmware_security_dialog_min_row, "success_icon_color");
         set_dialog_item_layer1 (self,
                                 "security-low-symbolic",
-                                "icon_neutral",
+                                "neutral",
                                 _("Security Leve: Minimum Protection"),
                                 _("This device has minimal protection against hardware security issues. This "
                                   "is the lowest device security level and only provides protection against "
@@ -119,7 +119,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
         gtk_widget_add_css_class (self->firmware_security_dialog_basic_row, "success_icon_color");
         set_dialog_item_layer1 (self,
                                 "security-medium-symbolic",
-                                "icon_warning",
+                                "warning",
                                 _("Security Level: Basic Protection"),
                                 _("This device has basic protection against hardware security issues. This "
                                   "provides protection against some common security threats."));
@@ -131,7 +131,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
         gtk_widget_add_css_class (self->firmware_security_dialog_extend_row, "success_icon_color");
         set_dialog_item_layer1 (self,
                                 "security-high-symbolic",
-                                "icon_good",
+                                "good",
                                 _("Security Level: Extended Protection"),
                                 _("This device has extended protection against hardware security issues. This "
                                   "is the highest device security level and provides protection against "
@@ -140,7 +140,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
       default:
         set_dialog_item_layer1 (self,
                                 "dialog-warning-symbolic",
-                                "icon_error",
+                                "error",
                                 _("Error: unable to determine HSI level."),
                                 _("Error: unable to determine Incorrect HSI level."));
     }

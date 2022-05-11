@@ -34,6 +34,9 @@
                             <property name="icon-name">security-low-symbolic</property>
                             <property name="pixel-size">32</property>
                             <property name="margin-bottom">6</property>
+                            <style>
+                              <class name="security-level-icon"/>
+                            </style>
                           </object>
                         </child>
                         <child>
@@ -86,6 +89,9 @@
                             <property name="valign">center</property>
                             <property name="icon-name">system-reboot-symbolic</property>
                             <property name="margin-bottom">6</property>
+                            <style>
+                              <class name="security-level-icon"/>
+                            </style>
                           </object>
                         </child>
                         <child>
