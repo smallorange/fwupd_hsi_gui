@@ -43,7 +43,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="secure_boot_title">
-                <property name="label"/>
                 <property name="wrap">True</property>
                 <style>
                   <class name="title-2" />
@@ -52,7 +51,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="secure_boot_body">
-                <property name="label"/>
                 <property name="wrap">True</property>
                 <property name="width-chars">32</property>
                 <property name="max-width-chars">32</property>

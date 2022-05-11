@@ -41,17 +41,15 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="hsi_label">
-                            <property name="label"/>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <style>
                               <class name="heading" />
                             </style>
                           </object>
-                        </child>      
+                        </child>
                         <child>
                           <object class="GtkLabel" id="hsi_description">
-                            <property name="label"/>
                             <property name="wrap">True</property>
                             <property name="justify">center</property>
                             <property name="ellipsize">none</property>
@@ -96,7 +94,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="secure_boot_label">
-                            <property name="label"/>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <style>
@@ -106,7 +103,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="secure_boot_description">
-                            <property name="label"/>
                             <property name="wrap">True</property>
                             <property name="justify">center</property>
                             <property name="ellipsize">none</property>
