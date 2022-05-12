@@ -94,14 +94,14 @@ set_secure_boot_button_view (CcfirmwareSecurityPanel *self)
   /* update UI */
   if (self->secure_boot_state == SECURE_BOOT_STATE_ACTIVE)
    {
-      gtk_label_set_text (GTK_LABEL(self->secure_boot_label), _("Secure Boot is Active"));
-      gtk_label_set_text (GTK_LABEL(self->secure_boot_description), _("Protected against malicious software when the device starts."));
+      gtk_label_set_text (GTK_LABEL (self->secure_boot_label), _("Secure Boot is Active"));
+      gtk_label_set_text (GTK_LABEL (self->secure_boot_description), _("Protected against malicious software when the device starts."));
       gtk_widget_add_css_class (self->secure_boot_icon, "good");
     }
   else if (self->secure_boot_state == SECURE_BOOT_STATE_PROBLEMS)
    {
-      gtk_label_set_text (GTK_LABEL(self->secure_boot_label), _("Secure Boot has Problems"));
-      gtk_label_set_text (GTK_LABEL(self->secure_boot_description), _("Some protection when the device is started."));
+      gtk_label_set_text (GTK_LABEL (self->secure_boot_label), _("Secure Boot has Problems"));
+      gtk_label_set_text (GTK_LABEL (self->secure_boot_description), _("Some protection when the device is started."));
       gtk_widget_add_css_class (self->secure_boot_icon, "error");
     }
   else
@@ -136,7 +136,7 @@ parse_event_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
         result = g_variant_get_uint32 (value);
       else if (g_strcmp0 (key, "Created") == 0)
         timestamp = g_variant_get_uint64 (value);
-      g_variant_unref(value);
+      g_variant_unref (value);
     }
 
   /* unknown to us */
@@ -178,7 +178,7 @@ parse_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
   guint64 flags = 0;
   guint32 hsi_level = 0;
 
-  while (g_variant_iter_next(iter, "{&sv}", &key, &value))
+  while (g_variant_iter_next (iter, "{&sv}", &key, &value))
     {
       if (g_strcmp0 (key, "AppstreamId") == 0)
         appstream_id = g_variant_get_string (value, NULL);
@@ -208,17 +208,17 @@ parse_variant_iter (CcfirmwareSecurityPanel *self, GVariantIter *iter)
         break;
       case 2:
         g_hash_table_insert (self->hsi2_dict,
-                             g_strdup(appstream_id),
+                             g_strdup (appstream_id),
                              GINT_TO_POINTER (flags));
         break;
       case 3:
         g_hash_table_insert (self->hsi3_dict,
-                             g_strdup(appstream_id),
+                             g_strdup (appstream_id),
                              GINT_TO_POINTER (flags));
         break;
       case 4:
         g_hash_table_insert (self->hsi4_dict,
-                             g_strdup(appstream_id),
+                             g_strdup (appstream_id),
                              GINT_TO_POINTER (flags));
         break;
     }
@@ -232,7 +232,7 @@ parse_data_from_variant (CcfirmwareSecurityPanel *self,
   const gchar *type_string;
   g_autoptr (GVariantIter) iter = NULL;
 
-  type_string = g_variant_get_type_string(value);
+  type_string = g_variant_get_type_string (value);
   if (g_strcmp0 (type_string, "(a{sv})") == 0)
     {
       g_variant_get (value, "(a{sv})", &iter);
@@ -261,7 +261,7 @@ parse_array_from_variant (CcfirmwareSecurityPanel *self,
                           const gboolean           is_event)
 {
   gsize sz;
-  g_autoptr(GVariant) untuple = NULL;
+  g_autoptr (GVariant) untuple = NULL;
 
   untuple = g_variant_get_child_value (value, 0);
   sz = g_variant_n_children (untuple);
@@ -285,7 +285,7 @@ on_bus_event_done_cb (GObject      *source,
   g_autoptr (GVariant) val = NULL;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
 
-  val = g_dbus_proxy_call_finish (G_DBUS_PROXY(source), res, &error);
+  val = g_dbus_proxy_call_finish (G_DBUS_PROXY (source), res, &error);
   if (val == NULL)
     {
       g_warning ("failed to get Security Attribute Event: %s", error->message);
@@ -300,11 +300,11 @@ on_bus_done (GObject      *source,
              GAsyncResult *res,
              gpointer      user_data)
 {
-  g_autoptr(GError) error = NULL;
-  g_autoptr(GVariant) val = NULL;
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GVariant) val = NULL;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
 
-  val = g_dbus_proxy_call_finish (G_DBUS_PROXY(source), res, &error);
+  val = g_dbus_proxy_call_finish (G_DBUS_PROXY (source), res, &error);
   if (val == NULL)
     {
       g_warning ("failed to get Security Attribute: %s", error->message);
@@ -321,7 +321,7 @@ on_bus_ready_cb (GObject       *source_object,
                  GAsyncResult  *res,
                  gpointer       user_data)
 {
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GError) error = NULL;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
 
   self->bus_proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
@@ -376,7 +376,7 @@ on_secure_boot_button_clicked_cb (GtkWidget *widget, gpointer data)
   GtkWidget *toplevel;
   CcShell *shell;
   GtkWidget *boot_dialog;
-  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL(data);
+  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (data);
 
   boot_dialog = cc_firmware_security_boot_dialog_new (self->secure_boot_state);
   shell = cc_panel_get_shell (CC_PANEL (self));
@@ -456,7 +456,7 @@ on_properties_bus_done_cb (GObject      *source,
   val = g_dbus_proxy_call_finish (G_DBUS_PROXY (source), res, &error);
   if (val == NULL)
     {
-      g_warning("failed to get HSI number");
+      g_warning ("failed to get HSI number");
       return;
     }
 

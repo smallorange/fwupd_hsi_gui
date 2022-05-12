@@ -124,7 +124,7 @@ fu_security_attr_get_name (const gchar *appstream_id)
 }
 
 gboolean
-firmware_security_attr_has_flag(guint64 flags, FwupdSecurityAttrFlags flag)
+firmware_security_attr_has_flag (guint64 flags, FwupdSecurityAttrFlags flag)
 {
   return (flags & flag) > 0;
 }
@@ -244,7 +244,7 @@ fwupd_event_to_log (const char *appstream_id, FwupdSecurityAttrResult result)
       }
     };
 
-  for(int i = 0; event_log_items[i].appstream_id != NULL; i++)
+  for (int i = 0; event_log_items[i].appstream_id != NULL; i++)
     {
       if (g_strcmp0 (appstream_id, event_log_items[i].appstream_id) == 0 &&
                      result == event_log_items[i].result)

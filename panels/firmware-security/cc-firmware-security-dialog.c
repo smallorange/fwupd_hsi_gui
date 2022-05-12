@@ -81,7 +81,7 @@ set_dialog_item_layer1 (CcFirmwareSecurityDialog *self,
 }
 
 static void
-update_dialog(CcFirmwareSecurityDialog *self)
+update_dialog (CcFirmwareSecurityDialog *self)
 {
   adw_action_row_set_icon_name (ADW_ACTION_ROW (self->firmware_security_dialog_min_row), "dialog-error-symbolic");
   adw_action_row_set_icon_name (ADW_ACTION_ROW (self->firmware_security_dialog_basic_row), "dialog-error-symbolic");
@@ -114,7 +114,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
                                   "simple security threats."));
         break;
       case 2:
-        adw_action_row_set_icon_name (ADW_ACTION_ROW(self->firmware_security_dialog_basic_row),
+        adw_action_row_set_icon_name (ADW_ACTION_ROW (self->firmware_security_dialog_basic_row),
                                       "emblem-default-symbolic");
         gtk_widget_add_css_class (self->firmware_security_dialog_basic_row, "success_icon_color");
         set_dialog_item_layer1 (self,
@@ -126,7 +126,7 @@ update_dialog(CcFirmwareSecurityDialog *self)
         break;
       case 3:
       case 4:
-        adw_action_row_set_icon_name (ADW_ACTION_ROW(self->firmware_security_dialog_extend_row),
+        adw_action_row_set_icon_name (ADW_ACTION_ROW (self->firmware_security_dialog_extend_row),
                                       "emblem-default-symbolic");
         gtk_widget_add_css_class (self->firmware_security_dialog_extend_row, "success_icon_color");
         set_dialog_item_layer1 (self,
@@ -169,7 +169,7 @@ update_hsi_listbox (CcFirmwareSecurityDialog *self, const gint hsi_level)
   guint64 flags = 0;
   g_autoptr (GList) hash_keys = NULL;
 
-  switch(hsi_level)
+  switch (hsi_level)
     {
       case 1:
         hsi_dict = self->hsi1_dict;
@@ -190,9 +190,9 @@ update_hsi_listbox (CcFirmwareSecurityDialog *self, const gint hsi_level)
     }
 
   hash_keys = g_hash_table_get_keys (hsi_dict);
-  for(GList *item = g_list_first (hash_keys); item != NULL; item = g_list_next (item))
+  for (GList *item = g_list_first (hash_keys); item != NULL; item = g_list_next (item))
     {
-      flags = GPOINTER_TO_INT(g_hash_table_lookup (hsi_dict, item->data));
+      flags = GPOINTER_TO_INT (g_hash_table_lookup (hsi_dict, item->data));
       if (firmware_security_attr_has_flag (flags, FWUPD_SECURITY_ATTR_FLAG_SUCCESS))
         {
           pg_row = hsi_create_pg_row ("emblem-default-symbolic", "color_green", item->data);
