@@ -209,7 +209,7 @@ update_hsi_listbox (CcFirmwareSecurityDialog *self, const gint hsi_level)
 }
 
 static void
-on_hsi_click (GtkWidget *widget, gpointer data)
+on_hsi_clicked_cb (GtkWidget *widget, gpointer data)
 {
   CcFirmwareSecurityDialog *self = CC_FIRMWARE_SECURITY_DIALOG (data);
 
@@ -234,7 +234,7 @@ on_hsi_click (GtkWidget *widget, gpointer data)
 }
 
 static void
-on_fw_back_button_click (GtkWidget *widget, gpointer data)
+on_fw_back_button_clicked_cb (GtkWidget *widget, gpointer data)
 {
   CcFirmwareSecurityDialog *self = CC_FIRMWARE_SECURITY_DIALOG (data);
 
@@ -265,8 +265,8 @@ cc_firmware_security_dialog_class_init (CcFirmwareSecurityDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi3_pg);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, fw_back_button);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_hsi_click);
-  gtk_widget_class_bind_template_callback (widget_class, on_fw_back_button_click);
+  gtk_widget_class_bind_template_callback (widget_class, on_hsi_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_fw_back_button_clicked_cb);
 }
 
 void

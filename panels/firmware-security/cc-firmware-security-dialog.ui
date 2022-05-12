@@ -21,7 +21,7 @@
             <property name="halign">center</property>
             <property name="visible">False</property>
             <property name="valign">center</property>
-            <signal name="clicked" handler="on_fw_back_button_click" swapped="no" />
+            <signal name="clicked" handler="on_fw_back_button_clicked_cb" swapped="no" />
             <child>
               <object class="GtkImage">
                 <property name="icon-name">go-previous-symbolic</property>
@@ -75,7 +75,6 @@
                   <object class="AdwPreferencesGroup">
                     <child>
                       <object class="GtkLabel" id="firmware_security_dialog_body_label">
-                        <property name="label" />
                         <property name="wrap">True</property>
                       </object>
                     </child>
@@ -90,7 +89,7 @@
                         <property name="activatable">True</property>
                         <property name="title">Minimum Protection</property>
                         <property name="icon-name">emblem-default-symbolic</property>
-                        <signal name="activated" handler="on_hsi_click" swapped="no" />
+                        <signal name="activated" handler="on_hsi_clicked_cb" swapped="no" />
                         <child>
                           <object class="GtkImage">
                             <property name="icon-name">go-next-symbolic</property>
@@ -106,7 +105,7 @@
                         <property name="name">firmware_security_basic_button</property>
                         <property name="title">Basic Protection</property>
                         <property name="icon-name">emblem-default-symbolic</property>
-                        <signal name="activated" handler="on_hsi_click" swapped="no" />
+                        <signal name="activated" handler="on_hsi_clicked_cb" swapped="no" />
                         <child>
                           <object class="GtkImage">
                             <property name="icon-name">go-next-symbolic</property>
@@ -120,7 +119,7 @@
                         <property name="name">firmware_security_extend_button</property>
                         <property name="use-underline">True</property>
                         <property name="activatable">True</property>
-                        <signal name="activated" handler="on_hsi_click" swapped="no" />
+                        <signal name="activated" handler="on_hsi_clicked_cb" swapped="no" />
                         <property name="title">Extended Protection</property>
                         <property name="icon-name">emblem-default-symbolic</property>
                         <child>

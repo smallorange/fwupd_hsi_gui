@@ -277,9 +277,9 @@ parse_array_from_variant (CcfirmwareSecurityPanel *self,
 }
 
 static void
-on_bus_event_done (GObject *source,
-                   GAsyncResult *res,
-                   gpointer user_data)
+on_bus_event_done_cb (GObject      *source,
+                      GAsyncResult *res,
+                      gpointer      user_data)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GVariant) val = NULL;
@@ -317,9 +317,9 @@ on_bus_done (GObject      *source,
 }
 
 static void
-on_bus_ready (GObject       *source_object,
-              GAsyncResult  *res,
-              gpointer       user_data)
+on_bus_ready_cb (GObject       *source_object,
+                 GAsyncResult  *res,
+                 gpointer       user_data)
 {
   g_autoptr(GError) error = NULL;
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
@@ -347,12 +347,12 @@ on_bus_ready (GObject       *source_object,
                      G_DBUS_CALL_FLAGS_NONE,
                      -1,
                      cc_panel_get_cancellable (CC_PANEL (self)),
-                     on_bus_event_done,
+                     on_bus_event_done_cb,
                      self);
 }
 
 static void
-on_hsi_button_click (GtkWidget *widget, gpointer data)
+on_hsi_button_clicked_cb (GtkWidget *widget, gpointer data)
 {
   GtkWidget *toplevel;
   CcShell *shell;
@@ -371,7 +371,7 @@ on_hsi_button_click (GtkWidget *widget, gpointer data)
 }
 
 static void
-on_secure_boot_button_click (GtkWidget *widget, gpointer data)
+on_secure_boot_button_clicked_cb (GtkWidget *widget, gpointer data)
 {
   GtkWidget *toplevel;
   CcShell *shell;
@@ -444,9 +444,9 @@ set_hsi_button_view (CcfirmwareSecurityPanel *self)
 }
 
 static void
-on_properties_bus_done (GObject      *source,
-                        GAsyncResult *res,
-                        gpointer      user_data)
+on_properties_bus_done_cb (GObject      *source,
+                           GAsyncResult *res,
+                           gpointer      user_data)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GVariant) val = NULL;
@@ -468,9 +468,9 @@ on_properties_bus_done (GObject      *source,
 }
 
 static void
-on_properties_bus_ready (GObject      *source_object,
-                         GAsyncResult *res,
-                         gpointer      user_data)
+on_properties_bus_ready_cb (GObject      *source_object,
+                            GAsyncResult *res,
+                            gpointer      user_data)
 {
   CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
   g_autoptr (GError) error = NULL;
@@ -492,7 +492,7 @@ on_properties_bus_ready (GObject      *source_object,
                      G_DBUS_CALL_FLAGS_NONE,
                      -1,
                      cc_panel_get_cancellable (CC_PANEL (self)),
-                     on_properties_bus_done,
+                     on_properties_bus_done_cb,
                      self);
 }
 
@@ -536,8 +536,8 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_stack);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_pgroup);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_click);
-  gtk_widget_class_bind_template_callback (widget_class, on_secure_boot_button_click);
+  gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_secure_boot_button_clicked_cb);
 }
 
 static void
@@ -561,7 +561,7 @@ cc_firmware_security_panel_init (CcfirmwareSecurityPanel *self)
                             "/",
                             "org.freedesktop.DBus.Properties",
                             cc_panel_get_cancellable (CC_PANEL (self)),
-                            on_properties_bus_ready,
+                            on_properties_bus_ready_cb,
                             self);
   g_dbus_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,
                             G_DBUS_PROXY_FLAGS_NONE,
@@ -570,6 +570,6 @@ cc_firmware_security_panel_init (CcfirmwareSecurityPanel *self)
                             "/",
                             "org.freedesktop.fwupd",
                             cc_panel_get_cancellable (CC_PANEL (self)),
-                            on_bus_ready,
+                            on_bus_ready_cb,
                             self);
 }
