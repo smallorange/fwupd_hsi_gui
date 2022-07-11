@@ -98,6 +98,12 @@ typedef enum {
   FWUPD_SECURITY_ATTR_RESULT_LAST
 } FwupdSecurityAttrResult;
 
+typedef struct
+{
+  gchar   *description;
+  gint64  flags;
+} CcHsiItem;
+
 const gchar *fu_security_attr_get_name       (const gchar             *appstream_id);
 gboolean     firmware_security_attr_has_flag (guint64                  flags,
                                               FwupdSecurityAttrFlags   flag);

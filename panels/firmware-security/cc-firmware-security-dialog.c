@@ -150,16 +150,22 @@ update_dialog (CcFirmwareSecurityDialog *self)
 }
 
 static GtkWidget *
-hsi_create_pg_row (const gchar *icon_name,
-                   const gchar *style,
-                   const gchar *item_name)
+hsi_create_expander_row (const gchar *icon_name,
+                         const gchar *style,
+                         const gchar *item_name,
+                         const gchar *description)
 {
   GtkWidget *row;
+  GtkWidget *subrow;
 
-  row = adw_action_row_new ();
-  adw_action_row_set_icon_name (ADW_ACTION_ROW (row), icon_name);
+  subrow = adw_action_row_new ();
+  adw_preferences_row_set_title (ADW_PREFERENCES_ROW (subrow), dgettext ("fwupd", description));
+
+  row = adw_expander_row_new ();
+  adw_expander_row_set_icon_name (ADW_EXPANDER_ROW (row), icon_name);
   adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), fu_security_attr_get_name (item_name));
-
+  adw_expander_row_add_row (ADW_EXPANDER_ROW (row), subrow);
+  
   return row;
 }
 
@@ -169,9 +175,9 @@ update_hsi_listbox (CcFirmwareSecurityDialog *self,
 {
   g_autoptr (GList) hash_keys = NULL;
   GHashTable *hsi_dict = NULL;
-  GtkWidget *pg_row;
+  GtkWidget *expander_row;
   GtkWidget *hsi_pg;
-  guint64 flags = 0;
+  CcHsiItem *hsi_item;
 
   switch (hsi_level)
     {
@@ -196,18 +202,19 @@ update_hsi_listbox (CcFirmwareSecurityDialog *self,
   hash_keys = g_hash_table_get_keys (hsi_dict);
   for (GList *item = g_list_first (hash_keys); item != NULL; item = g_list_next (item))
     {
-      flags = GPOINTER_TO_INT (g_hash_table_lookup (hsi_dict, item->data));
-      if (firmware_security_attr_has_flag (flags, FWUPD_SECURITY_ATTR_FLAG_SUCCESS))
+      hsi_item = g_hash_table_lookup (hsi_dict, item->data);
+
+      if (firmware_security_attr_has_flag (hsi_item->flags, FWUPD_SECURITY_ATTR_FLAG_SUCCESS))
         {
-          pg_row = hsi_create_pg_row ("emblem-default-symbolic", "color_green", item->data);
-          gtk_widget_add_css_class (pg_row, "success-icon");
+          expander_row = hsi_create_expander_row ("emblem-default-symbolic", "color_green", item->data, hsi_item->description);
+          gtk_widget_add_css_class (expander_row, "success-icon");
         }
       else
         {
-          pg_row = hsi_create_pg_row ("dialog-error-symbolic", "color_dim", item->data);
-          gtk_widget_add_css_class (pg_row, "error-icon");
+          expander_row = hsi_create_expander_row ("dialog-error-symbolic", "color_dim", item->data, hsi_item->description);
+          gtk_widget_add_css_class (expander_row, "error-icon");
         }
-      adw_preferences_group_add (ADW_PREFERENCES_GROUP (hsi_pg), GTK_WIDGET (pg_row));
+      adw_preferences_group_add (ADW_PREFERENCES_GROUP (hsi_pg), GTK_WIDGET (expander_row));
     }
   self->is_created = TRUE;
 }
