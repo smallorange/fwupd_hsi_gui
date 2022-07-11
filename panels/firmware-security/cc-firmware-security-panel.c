@@ -29,6 +29,7 @@
 
 #include <gio/gdesktopappinfo.h>
 #include <glib/gi18n.h>
+#include <libintl.h>
 
 struct _CcfirmwareSecurityPanel
 {
@@ -185,8 +186,10 @@ parse_variant_iter (CcfirmwareSecurityPanel *self,
   GVariant *value;
   const gchar *key;
   const gchar *appstream_id = NULL;
+  const gchar *description;
   guint64 flags = 0;
   guint32 hsi_level = 0;
+  CcHsiItem *hsi_item;
 
   while (g_variant_iter_next (iter, "{&sv}", &key, &value))
     {
@@ -196,6 +199,11 @@ parse_variant_iter (CcfirmwareSecurityPanel *self,
         flags = g_variant_get_uint64 (value);
       else if (g_strcmp0 (key, "HsiLevel") == 0)
         hsi_level = g_variant_get_uint32 (value);
+      else if (g_strcmp0 (key, "Description") == 0)
+        {
+          description = g_variant_get_string (value, NULL);
+          //printf("====> %s\n", dgettext ("fwupd", description));
+        }
       g_variant_unref (value);
     }
 
@@ -203,33 +211,38 @@ parse_variant_iter (CcfirmwareSecurityPanel *self,
   if (appstream_id == NULL)
     return;
 
+  hsi_item = g_malloc0(sizeof(CcHsiItem));
+
+  hsi_item->description = g_strdup (description);
+  hsi_item->flags = flags;
+
   /* insert into correct hash table */
   switch (hsi_level)
     {
       case 0:
         g_hash_table_insert (self->hsi0_dict,
                              g_strdup (appstream_id),
-                             GINT_TO_POINTER (flags));
+                             hsi_item);
         break;
       case 1:
         g_hash_table_insert (self->hsi1_dict,
                              g_strdup (appstream_id),
-                             GINT_TO_POINTER (flags));
+                             hsi_item);
         break;
       case 2:
         g_hash_table_insert (self->hsi2_dict,
                              g_strdup (appstream_id),
-                             GINT_TO_POINTER (flags));
+                             hsi_item);
         break;
       case 3:
         g_hash_table_insert (self->hsi3_dict,
                              g_strdup (appstream_id),
-                             GINT_TO_POINTER (flags));
+                             hsi_item);
         break;
       case 4:
         g_hash_table_insert (self->hsi4_dict,
                              g_strdup (appstream_id),
-                             GINT_TO_POINTER (flags));
+                             hsi_item);
         break;
     }
 }
