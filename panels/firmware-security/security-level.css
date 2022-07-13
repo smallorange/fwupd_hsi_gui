@@ -32,18 +32,18 @@
   color: @light_4f;
 }
 
-row.success-icon image {
+row.success-icon image.icon {
   color: @success_color;
 }
 
-row.warning-icon image {
+row.warning-icon image.icon {
   color: @warning_color;
 }
 
-row.error-icon image {
+row.error-icon image.icon {
   color: @error_color;
 }
 
-row.gray-icon image {
+row.gray-icon image.icon {
   color: @light_4;
 }
