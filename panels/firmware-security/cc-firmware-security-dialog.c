@@ -227,7 +227,7 @@ hsi_create_pg_row (const gchar *icon_name,
   GtkWidget *row;
   GtkWidget *status_icon;
   GtkWidget *status_label;
-  GtkWidget *actions_parent;
+  GtkWidget *actions_parent = NULL;
   const gchar *result_str = NULL;
 
   row = adw_expander_row_new ();
@@ -265,6 +265,7 @@ hsi_create_pg_row (const gchar *icon_name,
   else
     {
       adw_expander_row_set_enable_expansion (ADW_EXPANDER_ROW (row), FALSE);
+      gtk_widget_add_css_class (row, "hide-arrow");
     }
 
   return row;
