@@ -44,6 +44,7 @@ struct _CcfirmwareSecurityPanel
 
   GtkWidget        *hsi_circle_box;
   GtkWidget        *hsi_circle_number;
+  GtkWidget        *hsi_icon;
 
   GtkWidget        *hsi_label;
   GtkWidget        *hsi_description;
@@ -442,30 +443,22 @@ set_hsi_button_view_contain (CcfirmwareSecurityPanel *self,
   switch (hsi_number)
     {
       case 0:
-        gtk_label_set_label (GTK_LABEL (self->hsi_circle_number), "0");
-        gtk_widget_add_css_class (self->hsi_circle_box, "level0");
-        gtk_widget_add_css_class (self->hsi_circle_number, "hsi0");
+        gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), "dialog-warning-symbolic");
+        gtk_widget_add_css_class (self->hsi_icon, "error");
         break;
       case 1:
-        gtk_label_set_label (GTK_LABEL (self->hsi_circle_number), "1");
-        gtk_widget_add_css_class (self->hsi_circle_box, "level1");
-        gtk_widget_add_css_class (self->hsi_circle_number, "hsi1");
+        gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), "emblem-default-symbolic");
+        gtk_widget_add_css_class (self->hsi_icon, "good");
         break;
       case 2:
-        gtk_label_set_label (GTK_LABEL (self->hsi_circle_number), "2");
-        gtk_widget_add_css_class (self->hsi_circle_box, "level2");
-        gtk_widget_add_css_class (self->hsi_circle_number, "hsi2");
-        break;
       case 3:
       case 4:
-        gtk_label_set_label (GTK_LABEL (self->hsi_circle_number), "3");
-        gtk_widget_add_css_class (self->hsi_circle_box, "level3");
-        gtk_widget_add_css_class (self->hsi_circle_number, "hsi3");
+        gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), "security-high-symbolic");
+        gtk_widget_add_css_class (self->hsi_icon, "good");
         break;
       default:
-        gtk_label_set_label (GTK_LABEL (self->hsi_circle_number), "?");
-        gtk_widget_add_css_class (self->hsi_circle_box, "level1");
-        gtk_widget_add_css_class (self->hsi_circle_number, "hsi1");
+        gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi_icon), "dialog-question-symbolic");
+        gtk_widget_add_css_class (self->hsi_icon, "neutral");
         break;
     }
 
@@ -482,43 +475,30 @@ set_hsi_button_view (CcfirmwareSecurityPanel *self)
         set_hsi_button_view_contain (self,
                                      self->hsi_number,
                                      /* TRANSLATORS: in reference to firmware protection: 0/4 stars */
-                                     _("Security Level 0"),
-                                     _("Exposed to serious security threats."));
+                                     _("Checks Failed"),
+                                     _("Hardware does not pass checks."));
         break;
       case 1:
         set_hsi_button_view_contain (self,
                                      self->hsi_number,
                                      /* TRANSLATORS: in reference to firmware protection: 1/4 stars */
-                                     _("Security Level 1"),
-                                     _("Limited protection against simple security threats."));
+                                     _("Checks Passed"),
+                                     _("Hardware meets security requirements."));
         break;
       case 2:
-        set_hsi_button_view_contain (self,
-                                     self->hsi_number,
-                                     /* TRANSLATORS: in reference to firmware protection: 2/4 stars */
-                                     _("Security Level 2"),
-                                     _("Protected against common security threats."));
-        break;
       case 3:
-        set_hsi_button_view_contain (self,
-                                     self->hsi_number,
-                                     /* TRANSLATORS: in reference to firmware protection: 3/4 stars */
-                                     _("Security Level 3"),
-                                     _("Protected against a wide range of security threats."));
-        break;
       case 4:
         set_hsi_button_view_contain (self,
-                                     /* Based on current HSI definition, the max HSI value would be 3. */
-                                     3,
-                                     /* TRANSLATORS: in reference to firmware protection: 4/4 stars */
-                                     _("Comprehensive Protection"),
-                                     _("Protected against a wide range of security threats."));
+                                     self->hsi_number,
+                                     /* TRANSLATORS: in reference to firmware protection: 2~4 stars */
+                                     _("Protected"),
+                                     _("Hardware has a good level of protection."));
         break;
       case G_MAXUINT:
         set_hsi_button_view_contain (self,
                                      self->hsi_number,
                                      /* TRANSLATORS: in reference to firmware protection: ??? stars */
-                                     _("Security Level"),
+                                     _("Checks Unavailable"),
                                      _("Security levels are not available for this device."));
         break;
       default:
@@ -594,6 +574,8 @@ update_panel_visibility (const gchar *chassis_type)
   /* there's no point showing this */
   if (g_strcmp0 (chassis_type, "vm") == 0 || g_strcmp0 (chassis_type, "") == 0)
     visible = FALSE;
+
+  visible = TRUE;
   application = CC_APPLICATION (g_application_get_default ());
   cc_shell_model_set_panel_visibility (cc_application_get_model (application),
                                        "firmware-security",
@@ -670,8 +652,7 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, firmware_security_log_stack);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_button);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_description);
-  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_circle_box);
-  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_circle_number);
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_icon);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, hsi_label);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_button);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_description);
