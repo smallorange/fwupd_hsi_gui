@@ -39,6 +39,9 @@ struct _CcfirmwareSecurityPanel
   GtkButton        *hsi_button;
   GtkButton        *secure_boot_button;
 
+  /* Leaflet */
+  GtkWidget        *panel_leaflet;
+
   /* HSI button */
   GtkWidget        *hsi_grid;
 
@@ -360,6 +363,7 @@ on_bus_done (GObject      *source,
 
   parse_array_from_variant (self, val, FALSE);
   set_secure_boot_button_view (self);
+  adw_leaflet_set_visible_child_name (ADW_LEAFLET(self->panel_leaflet), "panel_show");
 }
 
 static void
@@ -658,6 +662,7 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_description);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_icon);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_label);
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, panel_leaflet);
 
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_secure_boot_button_clicked_cb);
