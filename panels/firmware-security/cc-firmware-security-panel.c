@@ -26,6 +26,7 @@
 #include "cc-firmware-security-resources.h"
 #include "cc-firmware-security-dialog.h"
 #include "cc-firmware-security-boot-dialog.h"
+#include "cc-firmware-security-help-dialog.h"
 #include "cc-firmware-security-utils.h"
 #include "cc-util.h"
 
@@ -38,6 +39,9 @@ struct _CcfirmwareSecurityPanel
 
   GtkButton        *hsi_button;
   GtkButton        *secure_boot_button;
+
+  /* Leaflet */
+  GtkWidget        *panel_leaflet;
 
   /* HSI button */
   GtkWidget        *hsi_grid;
@@ -350,17 +354,18 @@ on_bus_done (GObject      *source,
   val = g_dbus_proxy_call_finish (G_DBUS_PROXY (source), res, &error);
   if (val == NULL)
     {
-      CcApplication *application = CC_APPLICATION (g_application_get_default ());
-      g_warning ("failed to get Security Attribute: %s", error->message);
-      cc_shell_model_set_panel_visibility (cc_application_get_model (application),
-                                           "firmware-security",
-                                           CC_PANEL_HIDDEN);
-      set_secure_boot_button_view (self);
+      //CcApplication *application = CC_APPLICATION (g_application_get_default ());
+      //g_warning ("failed to get Security Attribute: %s", error->message);
+      //cc_shell_model_set_panel_visibility (cc_application_get_model (application),
+      //                                     "firmware-security",
+       //                                    CC_PANEL_HIDDEN);
+      //set_secure_boot_button_view (self);
       return;
     }
 
   parse_array_from_variant (self, val, FALSE);
   set_secure_boot_button_view (self);
+  adw_leaflet_set_visible_child_name (ADW_LEAFLET(self->panel_leaflet), "panel_show");
 }
 
 static void
@@ -433,6 +438,22 @@ on_secure_boot_button_clicked_cb (GtkWidget *widget,
   toplevel = cc_shell_get_toplevel (shell);
   gtk_window_set_transient_for (GTK_WINDOW (boot_dialog), GTK_WINDOW (toplevel));
   gtk_widget_show (boot_dialog);
+}
+
+static void
+on_fw_help_button_clicked_cb (GtkWidget *widget,
+                              gpointer   data)
+{
+  GtkWidget *toplevel;
+  CcShell *shell;
+  GtkWidget *help_dialog;
+  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (data);
+
+  help_dialog = cc_firmware_security_help_dialog_new (NULL);
+  shell = cc_panel_get_shell (CC_PANEL (self));
+  toplevel = cc_shell_get_toplevel (shell);
+  gtk_window_set_transient_for (GTK_WINDOW (help_dialog), GTK_WINDOW (toplevel));
+  gtk_widget_show (help_dialog);
 }
 
 static void
@@ -659,9 +680,11 @@ cc_firmware_security_panel_class_init (CcfirmwareSecurityPanelClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_description);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_icon);
   gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, secure_boot_label);
+  gtk_widget_class_bind_template_child (widget_class, CcfirmwareSecurityPanel, panel_leaflet);
 
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_secure_boot_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_fw_help_button_clicked_cb);
 }
 
 static void
