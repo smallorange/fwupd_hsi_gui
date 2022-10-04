@@ -32,15 +32,9 @@ struct _CcFirmwareSecurityDialog
 {
   AdwWindow            parent;
 
-  GtkWidget           *dialog_hsi_circle_box;
-  GtkWidget           *dialog_hsi_circle_number;
+  GtkWidget           *firmware_security_dialog_icon;
 
-  GtkWidget           *hsi1_icon;
-  GtkWidget           *hsi2_icon;
-  GtkWidget           *hsi3_icon;
-  GtkWidget           *hsi1_title;
-  GtkWidget           *hsi2_title;
-  GtkWidget           *hsi3_title;
+
 
   GtkWidget           *firmware_security_dialog_title_label;
   GtkWidget           *firmware_security_dialog_body_label;
@@ -50,7 +44,6 @@ struct _CcFirmwareSecurityDialog
   GtkWidget           *firmware_security_dialog_hsi1_pg;
   GtkWidget           *firmware_security_dialog_hsi2_pg;
   GtkWidget           *firmware_security_dialog_hsi3_pg;
-  GtkWidget           *firmware_security_dialog_hsi_label;
   AdwLeaflet          *leaflet;
   AdwWindowTitle      *second_page_title;
 
@@ -68,74 +61,36 @@ G_DEFINE_TYPE (CcFirmwareSecurityDialog, cc_firmware_security_dialog, ADW_TYPE_W
 
 static void
 set_dialog_item_layer1 (CcFirmwareSecurityDialog *self,
-                        const gchar              *circle_str,
+                        const gchar              *icon_name,
                         const gchar              *title,
                         const gchar              *body)
 {
   g_autofree gchar *str = NULL;
 
-  gtk_label_set_label (GTK_LABEL (self->dialog_hsi_circle_number), circle_str);
+  gtk_image_set_from_icon_name (GTK_IMAGE (self->firmware_security_dialog_icon), icon_name);
   gtk_label_set_text (GTK_LABEL (self->firmware_security_dialog_title_label), title);
   gtk_label_set_text (GTK_LABEL (self->firmware_security_dialog_body_label), body);
 
   if (self->hsi_number == G_MAXUINT)
     {
-        gtk_widget_add_css_class (self->dialog_hsi_circle_box, "level1");
-        gtk_widget_add_css_class (self->dialog_hsi_circle_number, "hsi1");
-        gtk_widget_hide (self->hsi1_icon);
-        gtk_widget_hide (self->hsi2_icon);
-        gtk_widget_hide (self->hsi3_icon);
-        gtk_widget_hide (self->hsi1_title);
-        gtk_widget_hide (self->hsi2_title);
-        gtk_widget_hide (self->hsi3_title);
-        gtk_widget_hide (self->firmware_security_dialog_hsi_label);
+        gtk_widget_add_css_class (self->firmware_security_dialog_icon, "neutral");
         return;
     }
-
-  gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi1_icon), self->hsi_number >= 1 ? "emblem-ok" : "process-stop");
-  gtk_label_set_text (GTK_LABEL (self->hsi1_title), self->hsi_number >= 1 ? _("Passed") : _("Failed"));
-  gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi2_icon), self->hsi_number >= 2 ? "emblem-ok" : "process-stop");
-  gtk_label_set_text (GTK_LABEL (self->hsi2_title), self->hsi_number >= 2 ? _("Passed") : _("Failed"));
-  gtk_image_set_from_icon_name (GTK_IMAGE (self->hsi3_icon), self->hsi_number >= 3 ? "emblem-ok" : "process-stop");
-  gtk_label_set_text (GTK_LABEL (self->hsi3_title), self->hsi_number >= 3 ? _("Passed") : _("Failed"));
-
-  gtk_widget_add_css_class (self->firmware_security_dialog_min_row,
-                            self->hsi_number >= 1 ? "success-hsi-icon" : "error-hsi-icon");
-  gtk_widget_add_css_class (self->firmware_security_dialog_min_row,
-                            self->hsi_number >= 1 ? "success-title" : "error-title");
-  gtk_widget_add_css_class (self->firmware_security_dialog_basic_row,
-                            self->hsi_number >= 2 ? "success-hsi-icon" : "error-hsi-icon");
-  gtk_widget_add_css_class (self->firmware_security_dialog_basic_row,
-                            self->hsi_number >= 2 ? "success-title" : "error-title");
-  gtk_widget_add_css_class (self->firmware_security_dialog_extend_row,
-                            self->hsi_number >= 3 ? "success-hsi-icon" : "error-hsi-icon");
-  gtk_widget_add_css_class (self->firmware_security_dialog_extend_row,
-                            self->hsi_number >= 3 ? "success-title" : "error-title");
 
   switch (self->hsi_number)
     {
       case 0:
-        gtk_widget_add_css_class (self->dialog_hsi_circle_box, "level0");
-        gtk_widget_add_css_class (self->dialog_hsi_circle_number, "hsi0");
+        gtk_widget_add_css_class (self->firmware_security_dialog_icon, "error");
         break;
       case 1:
-        gtk_widget_add_css_class (self->dialog_hsi_circle_box, "level1");
-        gtk_widget_add_css_class (self->dialog_hsi_circle_number, "hsi1");
-        break;
       case 2:
-        gtk_widget_add_css_class (self->dialog_hsi_circle_box, "level2");
-        gtk_widget_add_css_class (self->dialog_hsi_circle_number, "hsi2");
-        break;
       case 3:
       case 4:
-        gtk_widget_add_css_class (self->dialog_hsi_circle_box, "level3");
-        gtk_widget_add_css_class (self->dialog_hsi_circle_number, "hsi3");
+        gtk_widget_add_css_class (self->firmware_security_dialog_icon, "good");
         break;
+      default:
+        gtk_widget_add_css_class (self->firmware_security_dialog_icon, "neutral");
     }
-
-  /* TRANSLATORS: HSI stands for Host Security ID and device refers to the computer as a whole */
-  str = g_strdup_printf (_("Device conforms to HSI level %d"), self->hsi_number);
-  gtk_label_set_text (GTK_LABEL (self->firmware_security_dialog_hsi_label), str);
 }
 
 static void
@@ -145,8 +100,8 @@ update_dialog (CcFirmwareSecurityDialog *self)
     {
     case 0:
       set_dialog_item_layer1 (self,
-                              "0",
-                              _("Security Level 0"),
+                              "dialog-warning-symbolic",
+                              _("Checks Failed"),
                               _("This device has no protection against hardware security issues. This could "
                                 "be because of a hardware or firmware configuration issue. It is "
                                 "recommended to contact your IT support provider."));
@@ -154,26 +109,19 @@ update_dialog (CcFirmwareSecurityDialog *self)
 
     case 1:
       set_dialog_item_layer1 (self,
-                              "1",
-                              _("Security Level 1"),
+                              "emblem-default-symbolic",
+                              _("Checks Passed"),
                               _("This device has minimal protection against hardware security issues. This "
                                 "is the lowest device security level and only provides protection against "
                                 "simple security threats."));
       break;
 
     case 2:
-      set_dialog_item_layer1 (self,
-                              "2",
-                              _("Security Level 2"),
-                              _("This device has basic protection against hardware security issues. This "
-                                "provides protection against some common security threats."));
-      break;
-
     case 3:
     case 4:
       set_dialog_item_layer1 (self,
-                              "3",
-                              _("Security Level 3"),
+                              "security-high-symbolic",
+                              _("Protected"),
                               _("This device has extended protection against hardware security issues. This "
                                 "is the highest device security level and provides protection against "
                                 "advanced security threats."));
@@ -181,8 +129,8 @@ update_dialog (CcFirmwareSecurityDialog *self)
 
     default:
       set_dialog_item_layer1 (self,
-                              "?",
-                              _("Security Level"),
+                              "dialog-question-symbolic",
+                              _("Checks Unavailable"),
                               _("Security levels are not available for this device."));
     }
 }
@@ -389,27 +337,15 @@ cc_firmware_security_dialog_class_init (CcFirmwareSecurityDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/control-center/firmware-security/cc-firmware-security-dialog.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, dialog_hsi_circle_box);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, dialog_hsi_circle_number);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, hsi1_icon);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, hsi2_icon);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, hsi3_icon);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, hsi1_title);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, hsi2_title);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, hsi3_title);
+  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_icon);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_title_label);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_body_label);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi_label);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_min_row);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_basic_row);
-  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_extend_row);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi1_pg);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi2_pg);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi3_pg);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, leaflet);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, second_page_title);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_hsi_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_fw_back_button_clicked_cb);
 }
 
