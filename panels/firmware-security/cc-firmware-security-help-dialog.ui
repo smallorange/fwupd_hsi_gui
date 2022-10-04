@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="CcFirmwareSecurityHelpDialog" parent="GtkDialog">
+    <property name="default-width">400</property>
+    <property name="modal">True</property>
+    <property name="title">About Device Security</property>
+
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="margin-start">32</property>
+        <property name="margin-end">32</property>
+        <property name="margin-bottom">32</property>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">16</property>
+
+            <child>
+              <object class="GtkLabel">
+                <property name="wrap">True</property>
+                <property name="width-chars">40</property>
+                <property name="max-width-chars">40</property>
+                <property name="justify">left</property>
+                <property name="label" translatable="yes">
+Device security provides information about how protected your device is against security issues which target the hardware itself.
+
+Aspects of hardware that affect security include:
+ • security features that are built into a hardware itself.
+ • how the hardware is configured to protect against security issues.
+ • the security of the software runs directly on the hardware.
+
+Security threats which affect hardware include malware and viruses that target the software that runs directly on the hardware. It also includes physical tampering, such as physical connection to the hardware to read data and implant malware.
+
+Device security is just one aspect of security, and does not reflect the overall security status of the system and applications.
+
+                </property>
+              </object>
+            </child>
+
+          </object>
+        </child>
+      </object>
+    </child>
+
+  </template>
+</interface>
