@@ -285,6 +285,7 @@ update_hsi_listbox (CcFirmwareSecurityDialog *self,
   self->is_created = TRUE;
 }
 
+/*
 static void
 on_hsi_clicked_cb (GtkWidget                *widget,
                    CcFirmwareSecurityDialog *self)
@@ -316,6 +317,7 @@ on_hsi_clicked_cb (GtkWidget                *widget,
       gtk_widget_set_visible (self->firmware_security_dialog_hsi3_pg, TRUE);
     }
 }
+*/
 
 static void
 on_fw_back_button_clicked_cb (GtkWidget *widget,
@@ -328,6 +330,72 @@ on_fw_back_button_clicked_cb (GtkWidget *widget,
   gtk_widget_set_visible (self->firmware_security_dialog_hsi1_pg, FALSE);
   gtk_widget_set_visible (self->firmware_security_dialog_hsi2_pg, FALSE);
   gtk_widget_set_visible (self->firmware_security_dialog_hsi3_pg, FALSE);
+}
+
+static void
+on_hsi_detail_button_clicked_cb (GtkWidget *widget,
+                                 gpointer  *data)
+{
+  CcFirmwareSecurityDialog *self = CC_FIRMWARE_SECURITY_DIALOG (data);
+  GdkClipboard *clip_board;
+  GdkDisplay *display; 
+  g_autoptr (GList) hash_keys;
+  g_autoptr (GString) result_str;
+  GHashTable *hsi_dict = NULL;
+
+  result_str = g_string_new (NULL);
+
+  for (int i = 1; i <=4; i++)
+    {
+      switch (i)
+      {
+        case 1:
+          hsi_dict = self->hsi1_dict;
+          break;
+        case 2:
+          hsi_dict = self->hsi2_dict;
+          break;
+        case 3:
+          hsi_dict = self->hsi3_dict;
+          break;
+        case 4:
+          hsi_dict = self->hsi4_dict;
+          break;
+      }
+
+      g_string_append_printf (result_str, "Security Level");
+      g_string_append_printf (result_str, " %i", i);
+      g_string_append (result_str, "\n");
+
+      hash_keys = g_hash_table_get_keys (hsi_dict);
+      for (GList *item = g_list_first (hash_keys); item != NULL; item = g_list_next (item))
+        {
+          FwupdSecurityAttr *attr = g_hash_table_lookup (hsi_dict, item->data);
+          if (g_strcmp0 (attr->appstream_id, FWUPD_SECURITY_ATTR_ID_SUPPORTED_CPU) == 0)
+            continue;
+          if (attr->title == NULL)
+            continue;
+          if (firmware_security_attr_has_flag (attr, FWUPD_SECURITY_ATTR_FLAG_SUCCESS))
+            {
+              /* Passed */
+              g_string_append (result_str, "Passed ");
+              g_string_append (result_str, attr->title);
+              g_string_append (result_str, "\n");
+            }
+          else
+            {
+              /* Failed */
+              g_string_append (result_str, "Failed ");
+              g_string_append (result_str, attr->title);
+              g_string_append (result_str, "\n");
+            }
+        }
+        g_string_append (result_str, "\n\n");
+    }
+    /* write somewhere */
+    display = gdk_display_get_default ();
+    clip_board = gdk_display_get_clipboard (display);
+    gdk_clipboard_set_text (clip_board, result_str->str);
 }
 
 static void
@@ -347,6 +415,7 @@ cc_firmware_security_dialog_class_init (CcFirmwareSecurityDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, second_page_title);
 
   gtk_widget_class_bind_template_callback (widget_class, on_fw_back_button_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_hsi_detail_button_clicked_cb);
 }
 
 static void
