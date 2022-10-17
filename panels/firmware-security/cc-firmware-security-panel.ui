@@ -26,28 +26,28 @@
                 <child>
                   <object class="AdwPreferencesGroup">
                     <child>
-                      
+
                       <object class="GtkBox">
                         <property name="spacing">12</property>
                         <property name="homogeneous">True</property>
                         <property name="orientation">vertical</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="hexpand">true</property>
+                        <property name="vexpand">true</property>
                         <child>
-                          <object class="GtkImage">
+                          <object class="GtkSpinner">
                             <property name="halign">center</property>
                             <property name="valign">center</property>
-                            <property name="icon-name">dialog-question-symbolic</property>
-                            <property name="pixel-size">32</property>
-                            <property name="margin-bottom">6</property>
-                            <style>
-                              <class name="security-level-icon"/>
-                              <class name="neutral"/>
-                            </style>
+                            <property name="spinning">true</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkLabel">
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
+                            <property name="halign">0.0</property>
+                            <property name="valign">0.0</property>
                             <property name="label">Starting Device Security...</property>
                             <style>
                               <class name="heading" />
@@ -274,7 +274,7 @@
 
       </object>
 
-    
+
 
 
 
