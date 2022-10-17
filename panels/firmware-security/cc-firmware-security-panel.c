@@ -341,6 +341,28 @@ on_bus_event_done_cb (GObject      *source,
 }
 
 static void
+show_loading_page (CcfirmwareSecurityPanel *self, const gchar *page_name)
+{
+  adw_leaflet_set_visible_child_name (ADW_LEAFLET(self->panel_leaflet), page_name);
+}
+
+static int
+on_timeout_cb (gpointer user_data)
+{
+  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
+  show_loading_page (self, "panel_show");
+  return 0;
+}
+
+static int
+on_timeout_unavaliable (gpointer user_data)
+{
+  CcfirmwareSecurityPanel *self = CC_FIRMWARE_SECURITY_PANEL (user_data);
+  show_loading_page (self, "panel_unavaliable");
+  return 0;
+}
+
+static void
 on_bus_done (GObject      *source,
              GAsyncResult *res,
              gpointer      user_data)
@@ -363,7 +385,7 @@ on_bus_done (GObject      *source,
 
   parse_array_from_variant (self, val, FALSE);
   set_secure_boot_button_view (self);
-  adw_leaflet_set_visible_child_name (ADW_LEAFLET(self->panel_leaflet), "panel_show");
+  g_timeout_add (1500, on_timeout_cb, self);
 }
 
 static void
