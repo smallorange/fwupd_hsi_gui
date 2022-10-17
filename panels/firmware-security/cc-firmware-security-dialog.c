@@ -339,9 +339,11 @@ on_hsi_detail_button_clicked_cb (GtkWidget *widget,
 {
   CcFirmwareSecurityDialog *self = CC_FIRMWARE_SECURITY_DIALOG (data);
   GdkClipboard *clip_board;
-  GdkDisplay *display; 
+  GdkDisplay *display;
   g_autoptr (GList) hash_keys;
   g_autoptr (GString) result_str;
+  g_autoptr (GAppInfo) app_info;
+  g_autofree gchar *content_type = NULL;
   GHashTable *hsi_dict = NULL;
 
   result_str = g_string_new (NULL);
@@ -397,6 +399,30 @@ on_hsi_detail_button_clicked_cb (GtkWidget *widget,
     display = gdk_display_get_default ();
     clip_board = gdk_display_get_clipboard (display);
     gdk_clipboard_set_text (clip_board, result_str->str);
+
+    g_file_set_contents ("/tmp/output.txt",
+                         result_str->str,
+                         result_str->len,
+                         NULL);
+
+    g_autoptr (GdkAppLaunchContext) context = NULL;
+    g_autoptr (GError) error = NULL;
+    g_autoptr (GList) uri_list = NULL;
+    g_autofree gchar *file_uri = NULL;
+
+
+    content_type = g_content_type_from_mime_type ("text/plain");
+    app_info = g_app_info_get_default_for_type (content_type, TRUE);
+    context = gdk_display_get_app_launch_context (display);
+
+    file_uri = g_filename_to_uri ("/tmp/output.txt", NULL, &error);
+    uri_list = g_list_append (uri_list, file_uri);
+
+    g_app_info_launch_uris (app_info,
+                            uri_list,
+                            G_APP_LAUNCH_CONTEXT (context),
+                            &error);
+
 }
 
 static void
