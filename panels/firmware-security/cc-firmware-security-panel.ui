@@ -70,11 +70,10 @@
                           <object class="GtkImage">
                             <property name="halign">center</property>
                             <property name="valign">center</property>
-                            <property name="icon-name">dialog-question-symbolic</property>
-                            <property name="pixel-size">32</property>
+                            <property name="icon-name">security-high-symbolic</property>
+                            <property name="pixel-size">96</property>
                             <style>
-                              <class name="security-level-icon"/>
-                              <class name="neutral"/>
+                              <class name="panel-unavaliable-color"/>
                             </style>
                           </object>
                         </child>
