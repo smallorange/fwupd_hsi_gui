@@ -4,6 +4,10 @@
   min-height: 64px;
 }
 
+.panel-unavaliable-color {
+  color:  @light_4;
+}
+
 .hsi-level-box.level0 {
   background-color: alpha(@error_color, .25);
 }
