@@ -46,6 +46,7 @@ struct _CcFirmwareSecurityDialog
   GtkWidget           *firmware_security_dialog_hsi3_pg;
   AdwLeaflet          *leaflet;
   AdwWindowTitle      *second_page_title;
+  AdwToastOverlay     *toast_overlay;
 
   gboolean             is_created;
 
@@ -396,6 +397,7 @@ on_hsi_detail_button_clicked_cb (GtkWidget *widget,
     display = gdk_display_get_default ();
     clip_board = gdk_display_get_clipboard (display);
     gdk_clipboard_set_text (clip_board, result_str->str);
+    adw_toast_overlay_add_toast (self->toast_overlay, adw_toast_new (_("Copied")));
 }
 
 static void
@@ -413,6 +415,7 @@ cc_firmware_security_dialog_class_init (CcFirmwareSecurityDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, firmware_security_dialog_hsi3_pg);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, leaflet);
   gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, second_page_title);
+  gtk_widget_class_bind_template_child (widget_class, CcFirmwareSecurityDialog, toast_overlay);
 
   gtk_widget_class_bind_template_callback (widget_class, on_fw_back_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_hsi_detail_button_clicked_cb);
